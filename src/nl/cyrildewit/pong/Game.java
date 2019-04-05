@@ -1,6 +1,5 @@
 package nl.cyrildewit.pong;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -29,6 +28,9 @@ public class Game implements Runnable {
 	// Input
 	private KeyManager keyManager;
 
+	// Handler
+	private Handler handler;
+
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -40,8 +42,10 @@ public class Game implements Runnable {
 		display = new Display(title, width, height);
 		display.getFrame().addKeyListener(keyManager);
 
-		gameState = new GameState(this);
-		menuState = new MenuState(this);
+		handler = new Handler(this);
+
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler);
 		State.setState(gameState);
 	}
 
@@ -109,6 +113,14 @@ public class Game implements Runnable {
 
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	public synchronized void start() {
