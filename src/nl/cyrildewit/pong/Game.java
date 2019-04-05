@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import nl.cyrildewit.pong.display.Display;
+import nl.cyrildewit.pong.input.KeyManager;
+import nl.cyrildewit.pong.state.GameState;
+import nl.cyrildewit.pong.state.MenuState;
+import nl.cyrildewit.pong.state.State;
 
 public class Game implements Runnable {
 
@@ -18,18 +22,35 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 
+	// State
+	private State gameState;
+	private State menuState;
+
+	// Input
+	private KeyManager keyManager;
+
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
 		this.height = height;
+		keyManager = new KeyManager();
 	}
 
 	private void init() {
 		display = new Display(title, width, height);
+		display.getFrame().addKeyListener(keyManager);
+
+		gameState = new GameState(this);
+		menuState = new MenuState(this);
+		State.setState(gameState);
 	}
 
 	private void tick() {
-        //
+		keyManager.tick();
+
+        if (State.getState() != null) {
+        	State.getState().tick();
+        }
 	}
 
 	private void render() {
@@ -42,6 +63,10 @@ public class Game implements Runnable {
 
 		g = bs.getDrawGraphics();
 		g.clearRect(0, 0, width, height);
+
+		if (State.getState() != null) {
+        	State.getState().render(g);
+        }
 
 		bs.show();
 		g.dispose();
@@ -80,6 +105,10 @@ public class Game implements Runnable {
 		}
 
 		stop();
+	}
+
+	public KeyManager getKeyManager() {
+		return keyManager;
 	}
 
 	public synchronized void start() {
