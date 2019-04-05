@@ -5,7 +5,7 @@ import nl.cyrildewit.pong.display.Display;
 public class Launcher {
 
 	public static void main(String[] args) {
-		Game game = new Game("Pong!", 640, 480);
+		Game game = new Game("Pong Game!", 640, 480);
 		game.start();
 	}
 
