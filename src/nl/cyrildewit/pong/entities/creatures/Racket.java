@@ -5,13 +5,17 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.pong.entities.ID;
 
 public class Racket extends Creature {
 
-	public Racket(Handler handler, float x, float y) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+	public Racket(Handler handler, ID id, float x, float y) {
+		super(handler, id, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 
-		bounds = new Rectangle(0, 0, width, height);
+		bounds.x = 0;
+		bounds.y = 0;
+		bounds.width = width;
+		bounds.height = height;
 	}
 
 	@Override
@@ -24,12 +28,14 @@ public class Racket extends Creature {
 		xMove = 0;
 		yMove = 0;
 
-		if (handler.getKeyManager().up) {
-			yMove = -speed;
+		if (id.equals(ID.RacketOne)) {
+			if (handler.getKeyManager().up) yMove = -speed;
+			if (handler.getKeyManager().down) yMove = speed;
 		}
-
-		if (handler.getKeyManager().down) {
-			yMove = speed;
+		
+		if (id.equals(ID.RacketTwo)) {
+			if (handler.getKeyManager().aUp) yMove = -speed;
+			if (handler.getKeyManager().aDown) yMove = speed;
 		}
 	}
 
@@ -38,9 +44,6 @@ public class Racket extends Creature {
 		// White racket
 		g.setColor(Color.white);
 		g.fillRect((int) x, (int) y, width, height);
-
-//		g.setColor(Color.red);
-//		g.fillRect((int) bounds.x, (int) bounds.y, width, height);
 	}
 
 }

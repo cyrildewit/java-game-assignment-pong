@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.EntityManager;
+import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.entities.creatures.Racket;
 import nl.cyrildewit.pong.entities.statics.Ball;
 
@@ -20,9 +21,9 @@ public class ClassicWorld extends World {
 
 		entityManager = new EntityManager(handler);
 
-		entityManager.addEntity(new Racket(handler, 30, handler.getHeight() / 2));
-		entityManager.addEntity(new Racket(handler, handler.getWidth() - 30, handler.getHeight() / 2));
-		entityManager.addEntity(new Ball(handler, handler.getWidth() / 2, handler.getHeight() / 2, 10, 10));
+		entityManager.addEntity(new Racket(handler, ID.RacketOne, 30, handler.getHeight() / 2));
+		entityManager.addEntity(new Racket(handler, ID.RacketTwo, handler.getWidth() - 30, handler.getHeight() / 2));
+		entityManager.addEntity(new Ball(handler, ID.Ball, handler.getWidth() / 2, handler.getHeight() / 2, 15, 15));
 	}
 
 	public void tick() {
@@ -43,10 +44,11 @@ public class ClassicWorld extends World {
 		// Net
 		Graphics2D g2d = (Graphics2D)g;
 		float dashHeight = (float) handler.getHeight() / 20;
- 		BasicStroke bs = new BasicStroke(10, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{dashHeight}, 0);
+ 		BasicStroke bs = new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{dashHeight}, 0);
 		g2d.setColor(Color.white);
 		g2d.setStroke(bs);
 		g2d.drawLine(handler.getWidth() / 2, 0, handler.getWidth() / 2, handler.getHeight());
+		g2d.setStroke(new BasicStroke());
 	}
 
 	public EntityManager getEntityManager() {

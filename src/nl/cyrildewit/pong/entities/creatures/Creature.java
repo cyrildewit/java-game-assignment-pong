@@ -2,6 +2,7 @@ package nl.cyrildewit.pong.entities.creatures;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
+import nl.cyrildewit.pong.entities.ID;
 
 public abstract class Creature extends Entity {
 
@@ -12,8 +13,8 @@ public abstract class Creature extends Entity {
 	protected float speed;
 	protected float xMove, yMove;
 
-	public Creature(Handler handler, float x, float y, int width, int height) {
-		super(handler, x, y, width, height);
+	public Creature(Handler handler, ID id, float x, float y, int width, int height) {
+		super(handler, id, x, y, width, height);
 
 		speed = DEFAULT_SPEED;
 		xMove = 0;
@@ -21,8 +22,14 @@ public abstract class Creature extends Entity {
 	}
 
 	public void move() {
-		moveX();
-		moveY();
+		if (! checkEntityCollision(xMove, 0f)) {
+			moveX();
+		}
+
+		if (! checkEntityCollision(yMove, 0f)) {
+			moveY();
+		}
+
 	}
 
 	public void moveX() {
@@ -30,7 +37,20 @@ public abstract class Creature extends Entity {
 	}
 
 	public void moveY() {
-		y += yMove;
+
+		if (yMove < 0) { // Up
+			if (y <= 0) {
+
+			} else {
+				y += yMove;
+			}
+		} else { // Down
+			if (y >= handler.getHeight() - height) {
+
+			} else {
+				y += yMove;
+			}
+		}	
 	}
 
 	public float getSpeed() {
