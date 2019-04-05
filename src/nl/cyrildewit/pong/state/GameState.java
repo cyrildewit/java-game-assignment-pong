@@ -2,27 +2,29 @@ package nl.cyrildewit.pong.state;
 
 import java.awt.Graphics;
 
-import nl.cyrildewit.pong.Game;
+import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.creatures.Racket;
+import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class GameState extends State {
 
-	private Racket racket;
+	private ClassicWorld world;
 
-	public GameState(Game game) {
-		super(game);
+	public GameState(Handler handler) {
+		super(handler);
 
-		racket = new Racket(game, 100, 100);
+		world = new ClassicWorld(handler);
+		handler.setWorld(world);
 	}
 
 	@Override
 	public void tick() {
-		racket.tick();
+		world.tick();
 	}
 
 	@Override
 	public void render(Graphics g) {
-		racket.render(g);
+		world.render(g);
 	}
 
 }

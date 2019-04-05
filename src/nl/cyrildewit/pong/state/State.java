@@ -2,16 +2,16 @@ package nl.cyrildewit.pong.state;
 
 import java.awt.Graphics;
 
-import nl.cyrildewit.pong.Game;
+import nl.cyrildewit.pong.Handler;
 
 public abstract class State {
 
-    protected Game game;
+    protected Handler handler;
 
 	private static State currentState = null;
 
-    public State(Game game) {
-		this.game = game;
+    public State(Handler handler) {
+		this.handler = handler;
 	}
 
     public abstract void tick();
