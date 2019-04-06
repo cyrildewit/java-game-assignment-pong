@@ -4,26 +4,32 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.entities.creatures.Racket;
-import nl.cyrildewit.pong.entities.statics.Ball;
+import nl.cyrildewit.pong.entities.movables.Ball;
 
 public class ClassicWorld extends World {
 
 	// Entities
 	private EntityManager entityManager;
 
+	private Random random = new Random();
+
 	public ClassicWorld(Handler handler) {
 		super(handler);
 
 		entityManager = new EntityManager(handler);
 
+		int centerX = handler.getWidth() / 2;
+		int centerY = handler.getHeight() / 2;
+
 		entityManager.addEntity(new Racket(handler, ID.RacketOne, 30, handler.getHeight() / 2));
 		entityManager.addEntity(new Racket(handler, ID.RacketTwo, handler.getWidth() - 30, handler.getHeight() / 2));
-		entityManager.addEntity(new Ball(handler, ID.Ball, handler.getWidth() / 2, handler.getHeight() / 2, 15, 15));
+		entityManager.addEntity(new Ball(handler, ID.Ball, centerX, random.nextInt(centerY), 15));
 	}
 
 	public void tick() {
