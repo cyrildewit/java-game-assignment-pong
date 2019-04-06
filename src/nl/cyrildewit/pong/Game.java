@@ -11,6 +11,8 @@ import nl.cyrildewit.pong.state.State;
 
 public class Game implements Runnable {
 
+    private boolean dev = false;
+
 	private Display display;
 	public String title;
 	public int width, height;
@@ -58,14 +60,14 @@ public class Game implements Runnable {
 	}
 
 	private void render() {
-		bs = display.getCanvas().getBufferStrategy();
+		displayBufferStrategy = display.getCanvas().getBufferStrategy();
 
-		if (bs == null) {
+		if (displayBufferStrategy == null) {
 			display.getCanvas().createBufferStrategy(3);
 			return;
 		}
 
-		g = bs.getDrawGraphics();
+		g = displayBufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, width, height);
 
 		if (State.getState() != null) {
@@ -102,8 +104,10 @@ public class Game implements Runnable {
 			}
 
 			if (timer >= 1000000000) {
-				System.out.println("Ticks and Frames: " + ticks);
-				ticks = 0;
+				if (dev) {
+                    System.out.println("Ticks and Frames: " + ticks);
+                }
+                ticks = 0;
 				timer = 0;
 			}
 		}
