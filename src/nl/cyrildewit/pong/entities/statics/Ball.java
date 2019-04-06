@@ -2,17 +2,21 @@ package nl.cyrildewit.pong.entities.statics;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.pong.entities.Entity;
+import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
+import nl.cyrildewit.pong.entities.creatures.Racket;
 
 public class Ball extends StaticEntry {
-	
+
 	public static final float DEFAULT_SPEED = 5.0f;
 	public static final int DEFAULT_BALL_WIDTH = 15,
 							DEFAULT_BALL_HEIGHT = 15;
-	
+
 	protected float speed;
 	protected float xMove, yMove;
 
@@ -23,16 +27,15 @@ public class Ball extends StaticEntry {
 		bounds.y = 0;
 		bounds.width = width;
 		bounds.height = height;
-		
+
 		speed = DEFAULT_SPEED;
-		Random random = new Random();
-		xMove = random.nextInt(20);
-		yMove = random.nextInt(3);
+        xMove = yMove = speed;
 	}
 
 	@Override
 	public void tick() {
 		move();
+//		checkGoals();
 	}
 
 	@Override
@@ -40,34 +43,91 @@ public class Ball extends StaticEntry {
 		// White ball
 		g.setColor(Color.white);
 		g.fillOval((int) x, (int) y, (int) height, (int) width);
+
+		g.setColor(Color.green);
+		g.drawOval((int) (x + bounds.x), (int) (y + bounds.y), (int) bounds.width, (int) bounds.height);
+
 	}
-	
+
 	public void move() {
+		if(checkCollisionWithGoal()) {
+			System.out.println("Goal side: " + "left");
+		}
 		moveX();
 		moveY();
-		
-//		if (! checkEntityCollision(xMove, 0f)) {
-//			
-//		}
-//
-//		if (! checkEntityCollision(yMove, 0f)) {
-//			
+
+//		if (checkCollisionWithRacket()) {
+//			System.out.println("Collision with racket" + System.currentTimeMillis());
 //		}
 
+//		if (checkCollisionWithGoal()) {
+//			System.out.println("Collision with goal" + System.currentTimeMillis());
+//		}
+
+//		if (checkEntityCollision(xMove, 0)) {
+//			System.out.println("Col" + System.currentTimeMillis());
+//		}
+////
+////		if (! checkEntityCollision(yMove, 0f)) {
+////
+////		}
+
+	}
+
+	public boolean checkCollisionWithGoal() {
+		if (xMove < 0 && x <= 0) { // Up
+			return true;
+		} else if (xMove < 0  && x >= handler.getWidth() - width) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean checkCollisionWithRacket() {
+		EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
+
+		for(Entity e : entityManager.getEntities()) {
+			if(! e.equals(new Racket(handler, id, speed, speed)))
+				continue;
+			if(e.getCollisionBounds(0, 0).intersects(bounds)){
+//				e.add(1);
+//				System.out.println("Goalll");
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public void checkGoals() {
+		if (x <= 0) {
+//			System.out.println("Goalll");
+		}
+//		EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
+//
+//		for(Entity e : entityManager.getEntities()) {
+//			if(e.equals(this))
+//				continue;
+//			if(e.getCollisionBounds(0, 0).intersects(bounds)){
+////				e.add(1);
+//				System.out.println("Goalll");
+//				return;
+//			}
+//		}
 	}
 
 	public void moveX() {
 		if (xMove < 0) { // Up
-			if (x <= 0) {
+			if (x <= 0) { // Bounce the ball back
 				xMove *= -1;
 			} else {
 				x += xMove;
 			}
 		} else { // Down
-			if (x >= handler.getWidth() - width) {
+			if (x >= handler.getWidth() - width) { // Bounce the ball back
 				xMove *= -1;
 			} else {
-				
 				x += xMove;
 			}
 		}
@@ -75,17 +135,16 @@ public class Ball extends StaticEntry {
 
 	public void moveY() {
 		if (yMove < 0) { // Up
-			if (y <= 0) {
+			if (y <= 0) { // Bounce the ball back
 				yMove *= -1;
 			} else {
-				
+
 				y += yMove;
 			}
 		} else { // Down
-			if (y >= handler.getHeight() - height) {
+			if (y >= handler.getHeight() - height) { // Bounce the ball back
 				yMove *= -1;
 			} else {
-				
 				y += yMove;
 			}
 		}

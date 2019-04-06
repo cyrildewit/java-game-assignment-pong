@@ -20,7 +20,7 @@ public class Game implements Runnable {
 	private boolean running = false;
 	private Thread thread;
 
-	private BufferStrategy bs;
+	private BufferStrategy displayBufferStrategy;
 	private Graphics g;
 
 	// State
@@ -74,7 +74,7 @@ public class Game implements Runnable {
         	State.getState().render(g);
         }
 
-		bs.show();
+		displayBufferStrategy.show();
 		g.dispose();
 	}
 

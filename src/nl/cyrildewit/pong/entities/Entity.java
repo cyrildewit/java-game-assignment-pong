@@ -29,7 +29,7 @@ public abstract class Entity {
 
 	public abstract void render(Graphics g);
 
-	public boolean checkEntityCollision(float xOffset, float yOffset) {
+	public boolean checkEntityCollisions(float xOffset, float yOffset) {
 		EntityManager enitityManager = (EntityManager) handler.getWorld().getEntityManager();
 
 		for(Entity e : enitityManager.getEntities()) {
