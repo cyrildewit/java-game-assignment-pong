@@ -2,14 +2,10 @@ package nl.cyrildewit.pong.entities.movables;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
-import nl.cyrildewit.pong.entities.Entity;
-import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
-import nl.cyrildewit.pong.entities.creatures.Racket;
 
 public class Ball extends MovableEntity {
 
@@ -30,6 +26,7 @@ public class Ball extends MovableEntity {
 
         // Set default movement
         xMove = yMove = speed;
+        yMove = 3;
         // TODO: different angles (maybe using cos or sin)
         // xMove = speed;
         // yMove = 1 + random.nextFloat() * (max - min);
@@ -39,6 +36,7 @@ public class Ball extends MovableEntity {
 	public void tick() {
 		// Move the ball on every tick
         move();
+//        checkGoalCollision();
 	}
 
 	@Override

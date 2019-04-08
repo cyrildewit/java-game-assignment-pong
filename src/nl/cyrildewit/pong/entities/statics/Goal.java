@@ -37,21 +37,14 @@ public class Goal extends StaticEntry {
     	EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
 
         for(Entity e : entityManager.getEntities()) {
-        	if(e.equals(new Ball(handler, id, 0, 0, 0, 0))) {
-        		System.out.println("----------------------------");
-            	System.out.println("x: " + e.getX() + "| y: " + e.getY());
-            	System.out.println("----------------------------");
-            }
-        	
-			// If the current entity isn't an instance of the Ball class, continue
-            if(! e.equals(new Ball(handler, id, 0, 0, 0, 0))) {
-//                System.out.println("Not a ball");
+        	// If the current entity isn't an instance of the Ball class, continue
+            if(! e.getId().equals(ID.Ball)) {
                 continue;
             }
 
             // Check if the entity is touching the bounds of this goal
-			if(e.getCollisionBounds(0, 0).intersects(bounds)) {
-				System.out.println("Goalll");
+			if(e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
+				System.out.println("Goalll: " + getId());
 			}
 		}
     }

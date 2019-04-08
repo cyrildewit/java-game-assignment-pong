@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.pong.entities.Entity;
+import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 
@@ -29,6 +31,7 @@ public class Player extends MovableEntity {
 	public void tick() {
         getInput();
         move();
+        checkBallCollision();
 	}
 
 	@Override
@@ -45,5 +48,23 @@ public class Player extends MovableEntity {
 		if (inputKeySet.up()) yMove = -speed;
 		if (inputKeySet.down()) yMove = speed;
 	}
+    
+    public void checkBallCollision() {
+    	EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
+
+        for(Entity e : entityManager.getEntities()) {
+        	// If the current entity isn't an instance of the Ball class, continue
+            if(! e.getId().equals(ID.Ball)) {
+                continue;
+            }
+
+            // Check if the entity is touching the bounds of this goal
+			if(e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
+				Ball ball = (Ball) e;
+				ball.setXMove(-1 * ball.getXMove());
+				ball.setYMove(-1 * ball.getYMove());
+			}
+		}
+    }
 
 }

@@ -89,4 +89,12 @@ public abstract class Entity {
 		this.active = active;
 	}
 
+	public ID getId() {
+		return id;
+	}
+
+	public void setId(ID id) {
+		this.id = id;
+	}
+
 }

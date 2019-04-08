@@ -4,8 +4,8 @@ public enum ID {
 
 	PlayerOneGoal(),
 	PlayerTwoGoal(),
-	RacketOne(),
-	RacketTwo(),
+	PlayerOne(),
+	PlayerTwo(),
 	Ball();
 	
 }

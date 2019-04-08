@@ -9,7 +9,6 @@ import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
-import nl.cyrildewit.pong.entities.creatures.Racket;
 
 public class Ball extends StaticEntry {
 
@@ -84,21 +83,21 @@ public class Ball extends StaticEntry {
 		return false;
 	}
 
-	public boolean checkCollisionWithRacket() {
-		EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
-
-		for(Entity e : entityManager.getEntities()) {
-			if(! e.equals(new Racket(handler, id, speed, speed)))
-				continue;
-			if(e.getCollisionBounds(0, 0).intersects(bounds)){
-//				e.add(1);
-//				System.out.println("Goalll");
-				return true;
-			}
-		}
-
-		return false;
-	}
+//	public boolean checkCollisionWithRacket() {
+//		EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
+//
+//		for(Entity e : entityManager.getEntities()) {
+//			if(! e.equals(new Racket(handler, id, speed, speed)))
+//				continue;
+//			if(e.getCollisionBounds(0, 0).intersects(bounds)){
+////				e.add(1);
+////				System.out.println("Goalll");
+//				return true;
+//			}
+//		}
+//
+//		return false;
+//	}
 
 	public void checkGoals() {
 		if (x <= 0) {
