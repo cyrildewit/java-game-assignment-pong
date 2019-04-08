@@ -24,7 +24,7 @@ public class KeyManager implements KeyListener {
 			if(! cantPress[i] && keys[i]){
 				justPressed[i] = true;
 			}
-		}1
+		}
 	}
 
     public boolean keyJustPressed(int keyCode) {
