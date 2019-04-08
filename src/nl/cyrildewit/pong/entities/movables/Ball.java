@@ -14,9 +14,12 @@ import nl.cyrildewit.pong.entities.creatures.Racket;
 public class Ball extends MovableEntity {
 
     private int diameter;
+    private Random random;
 
 	public Ball(Handler handler, ID id, float x, float y, int diameter) {
 		super(handler, id, x, y, diameter, diameter);
+
+        random = new Random();
 
         this.diameter = diameter;
 
@@ -27,6 +30,9 @@ public class Ball extends MovableEntity {
 
         // Set default movement
         xMove = yMove = speed;
+        // TODO: different angles (maybe using cos or sin)
+        // xMove = speed;
+        // yMove = 1 + random.nextFloat() * (max - min);
 	}
 
 	@Override
