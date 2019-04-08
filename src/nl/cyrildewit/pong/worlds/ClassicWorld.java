@@ -11,6 +11,7 @@ import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.entities.movables.Ball;
 import nl.cyrildewit.pong.entities.movables.Player;
+import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerOneKeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerTwoKeySet;
@@ -36,6 +37,10 @@ public class ClassicWorld extends World {
 		Player playerOne = new Player(handler, ID.RacketOne, playerOneKeySet, 30, handler.getHeight() / 2);
 		Player playerTwo = new Player(handler, ID.RacketTwo, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2);
 
+		// TODO: refactor
+		entityManager.addEntity(new Goal(handler, ID.PlayerOneGoal, 0, 0, 5, handler.getHeight()));
+		entityManager.addEntity(new Goal(handler, ID.PlayerTwoGoal, handler.getWidth() - 5, 0, 5, handler.getHeight()));
+		
 		entityManager.addEntity(playerOne);
 		entityManager.addEntity(playerTwo);
 		entityManager.addEntity(new Ball(handler, ID.Ball, centerX, random.nextInt(centerY), 15));
