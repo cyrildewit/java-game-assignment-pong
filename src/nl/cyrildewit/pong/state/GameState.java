@@ -3,7 +3,6 @@ package nl.cyrildewit.pong.state;
 import java.awt.Graphics;
 
 import nl.cyrildewit.pong.Handler;
-import nl.cyrildewit.pong.entities.creatures.Racket;
 import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class GameState extends State {

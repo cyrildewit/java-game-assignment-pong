@@ -13,7 +13,7 @@ public class Game implements Runnable
 {
     private boolean running = false;
     private int width = 320, height = 240;
-    private float scale = 1f;
+//    private float scale = 1f;
     private String title;
 
 	private Display display;
@@ -92,9 +92,7 @@ public class Game implements Runnable
             }
 
             if (timer >= 1000000000) {
-                if (dev) {
-                    System.out.println("Ticks and Frames: " + ticks);
-                }
+                System.out.println("Ticks and Frames: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
@@ -111,7 +109,7 @@ public class Game implements Runnable
 		handler = new Handler(this);
 
 		gameState = new GameState(handler);
-		menuState = new MenuState(handler);
+//		menuState = new MenuState(handler);
 		State.setState(gameState);
 	}
 
