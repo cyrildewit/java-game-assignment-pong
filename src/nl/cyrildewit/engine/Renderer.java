@@ -1,23 +1,30 @@
 package nl.cyrildewit.engine;
 
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 import java.awt.image.DataBufferInt;
 
 public class Renderer
 {
-    private int pW, pH;
-    private int[] p;
+    private GameContainer gc;
+    private BufferStrategy bs;
+    private Graphics g;
 
     public Renderer(GameContainer gc)
     {
-        pW = gc.getWidth();
-        pH = gc.getHeight();
-        p = ((DataBufferInt) gc.getWindow().getImage().getRaster().getDataBuffer()).getData();
+        this.gc = gc;
+
+        bs = gc.getWindow().getCanvas().getBufferStrategy();
+        g = bs.getDrawGraphics();
     }
 
     public void clear()
     {
-        for(int i = 0; i < p.length; i++) {
-            p[i] += 0;
-        }
+        g.clearRect(0, 0, gc.getWidth(), gc.getHeight());
+    }
+
+    public Graphics getG()
+    {
+        return g;
     }
 }

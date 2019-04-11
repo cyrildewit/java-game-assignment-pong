@@ -1,9 +1,13 @@
 package nl.cyrildewit.engine;
 
+import java.awt.Graphics;
+
 public abstract class AbstractGame
 {
-    public abstract void update(GameContainer gc, float dt);
+    public abstract void initialize(GameContainer gc);
 
-    public abstract void render(GameContainer gc, Renderer r);
+    public abstract void update(GameContainer gc);
+
+    public abstract void render(GameContainer gc, Graphics g);
 
 }

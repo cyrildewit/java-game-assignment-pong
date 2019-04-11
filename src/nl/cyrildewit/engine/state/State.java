@@ -1,7 +1,8 @@
 package nl.cyrildewit.engine.state;
 
+import java.awt.Graphics;
+
 import nl.cyrildewit.engine.GameContainer;
-import nl.cyrildewit.engine.Renderer;
 
 public abstract class State {
 
@@ -15,7 +16,7 @@ public abstract class State {
 
     public abstract void update();
 
-    public abstract void render(Renderer r);
+    public abstract void render(Graphics g);
 
 	public static void setState(State state) {
 		currentState = state;

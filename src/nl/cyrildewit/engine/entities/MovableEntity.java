@@ -1,8 +1,7 @@
-package nl.cyrildewit.pong.entities.movables;
+package nl.cyrildewit.engine.entities;
 
 import nl.cyrildewit.engine.GameContainer;
-import nl.cyrildewit.pong.entities.Entity;
-import nl.cyrildewit.pong.entities.ID;
+import nl.cyrildewit.engine.Entity;
 
 public abstract class MovableEntity extends Entity {
 
@@ -11,8 +10,8 @@ public abstract class MovableEntity extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    public MovableEntity(GameContainer gc, ID id, float x, float y, int width, int height) {
-        super(gc, id, x, y, width, height);
+    public MovableEntity(GameContainer gc, float x, float y, int width, int height) {
+        super(gc, x, y, width, height);
 
         speed = DEFAULT_SPEED;
         xMove = 0;

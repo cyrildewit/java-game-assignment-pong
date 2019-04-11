@@ -1,7 +1,8 @@
 package nl.cyrildewit.engine.worlds;
 
+import java.awt.Graphics;
+
 import nl.cyrildewit.engine.GameContainer;
-import nl.cyrildewit.engine.Renderer;
 
 public abstract class World {
 
@@ -13,7 +14,7 @@ public abstract class World {
 
     public abstract void update();
 
-    public abstract void render(Renderer r);
+    public abstract void render(Graphics g);
 
     public abstract Object getEntityManager();
 

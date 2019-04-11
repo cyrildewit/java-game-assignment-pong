@@ -1,8 +1,8 @@
 package nl.cyrildewit.pong.state;
 
-import java.awt.Graphics;
-
 import nl.cyrildewit.engine.GameContainer;
+import nl.cyrildewit.engine.Renderer;
+import nl.cyrildewit.engine.state.State;
 
 public class MenuState extends State {
 
@@ -11,12 +11,12 @@ public class MenuState extends State {
 	}
 
 	@Override
-	public void tick() {
+	public void update() {
 		//
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Renderer r) {
 		//
 	}
 

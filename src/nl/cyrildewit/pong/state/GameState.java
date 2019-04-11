@@ -3,6 +3,7 @@ package nl.cyrildewit.pong.state;
 import java.awt.Graphics;
 
 import nl.cyrildewit.engine.GameContainer;
+import nl.cyrildewit.engine.Renderer;
 import nl.cyrildewit.engine.state.State;
 import nl.cyrildewit.pong.worlds.ClassicWorld;
 
@@ -14,7 +15,6 @@ public class GameState extends State {
 		super(gc);
 
 		world = new ClassicWorld(gc);
-		gc.setWorld(world);
 	}
 
 	@Override
@@ -23,8 +23,8 @@ public class GameState extends State {
 	}
 
 	@Override
-	public void render(Graphics g) {
-		world.render(g);
+	public void render(Renderer r) {
+		world.render(r);
 	}
 
 }

@@ -42,7 +42,7 @@ public class ClassicWorld extends World {
 		entityManager.tick();
 	}
 
-	public void render() {
+	public void render(Graphics g) {
 		buildWorld(g);
 
 		entityManager.render(g);

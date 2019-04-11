@@ -17,6 +17,7 @@ public class GameContainer implements Runnable
     public GameContainer(AbstractGame game)
     {
         this.game = game;
+        game.initialize(this);
     }
 
     public synchronized void start()
@@ -80,7 +81,7 @@ public class GameContainer implements Runnable
 
             if (render) {
                 renderer.clear();
-                game.render(this, renderer);
+                game.render(this, renderer.getG());
                 window.update();
 
                 frames++;

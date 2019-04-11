@@ -1,4 +1,4 @@
-package nl.cyrildewit.pong.entities;
+package nl.cyrildewit.engine.entities;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
