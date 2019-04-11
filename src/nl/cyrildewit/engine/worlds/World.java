@@ -1,6 +1,7 @@
-package nl.cyrildewit.pong.worlds;
+package nl.cyrildewit.engine.worlds;
 
 import nl.cyrildewit.engine.GameContainer;
+import nl.cyrildewit.engine.Renderer;
 
 public abstract class World {
 
@@ -10,7 +11,11 @@ public abstract class World {
 		this.gc = gc;
 	}
 
-	public abstract Object getEntityManager();
+    public abstract void update();
+
+    public abstract void render(Renderer r);
+
+    public abstract Object getEntityManager();
 
 	public GameContainer getHandler() {
 		return gc;

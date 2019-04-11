@@ -3,6 +3,7 @@ package nl.cyrildewit.pong.state;
 import java.awt.Graphics;
 
 import nl.cyrildewit.engine.GameContainer;
+import nl.cyrildewit.engine.state.State;
 import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class GameState extends State {
@@ -17,8 +18,8 @@ public class GameState extends State {
 	}
 
 	@Override
-	public void tick() {
-		world.tick();
+	public void update() {
+		world.update();
 	}
 
 	@Override

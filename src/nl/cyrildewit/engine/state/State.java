@@ -1,8 +1,7 @@
-package nl.cyrildewit.pong.state;
-
-import java.awt.Graphics;
+package nl.cyrildewit.engine.state;
 
 import nl.cyrildewit.engine.GameContainer;
+import nl.cyrildewit.engine.Renderer;
 
 public abstract class State {
 
@@ -14,9 +13,9 @@ public abstract class State {
 		this.gc = gc;
 	}
 
-    public abstract void tick();
+    public abstract void update();
 
-	public abstract void render(Graphics g);
+    public abstract void render(Renderer r);
 
 	public static void setState(State state) {
 		currentState = state;

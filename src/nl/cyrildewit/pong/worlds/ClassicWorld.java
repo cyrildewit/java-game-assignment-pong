@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import nl.cyrildewit.engine.GameContainer;
+import nl.cyrildewit.engine.worlds.World;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.entities.movables.Ball;
@@ -37,13 +38,11 @@ public class ClassicWorld extends World {
 		initEntities();
 	}
 
-	public void tick() {
+	public void update() {
 		entityManager.tick();
-
-        Systemm.out.println("tICKKK");
 	}
 
-	public void render(Graphics g) {
+	public void render() {
 		buildWorld(g);
 
 		entityManager.render(g);

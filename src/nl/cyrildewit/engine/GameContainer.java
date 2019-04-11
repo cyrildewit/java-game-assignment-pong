@@ -1,17 +1,12 @@
 package nl.cyrildewit.engine;
 
-import java.awt.Graphics;
-
-import nl.cyrildewit.pong.state.GameState;
-import nl.cyrildewit.pong.state.State;
-import nl.cyrildewit.pong.worlds.World;
-
 public class GameContainer implements Runnable
 {
     private Thread thread;
     private Window window;
     private Renderer renderer;
-    private KeyManager keyManager;
+    private Input input;
+    private AbstractGame game;
 
     private boolean running = false;
     private final double UPDATE_CAP = 1.0 / 60.0;
@@ -19,35 +14,16 @@ public class GameContainer implements Runnable
     private float scale = 1f;
     private String title;
 
-	// State
-	private State gameState;
-
-    // World
-    private World world;
-
-    public World getWorld()
+    public GameContainer(AbstractGame game)
     {
-        return world;
-    }
-
-    public void setWorld(World world)
-    {
-        this.world = world;
-    }
-
-    public GameContainer()
-    {
-        //
+        this.game = game;
     }
 
     public synchronized void start()
     {
-        // TEMP
-        init();
-        // ENDTEMP
         window = new Window(this);
         renderer = new Renderer(this);
-        keyManager = new KeyManager();
+        input = new Input(this);
 
         thread = new Thread(this);
         thread.start();
@@ -90,13 +66,10 @@ public class GameContainer implements Runnable
                 unprocessedTime -= UPDATE_CAP;
                 render = true;
 
-                // TODO: Update game
+                game.update(this, (float) UPDATE_CAP);
 
-                keyManager.tick();
-                if (State.getState() != null) {
-                    State.getState().tick();
-                }
-                // ENDTODO
+                input.update();
+
                 if (frameTime >= 1.0) {
                     frameTime = 0;
                     fps = frames;
@@ -106,13 +79,10 @@ public class GameContainer implements Runnable
             }
 
             if (render) {
-                // TODO: Render game
                 renderer.clear();
+                game.render(this, renderer);
                 window.update();
-                if (State.getState() != null) {
-                    State.getState().render(g);
-                }
-                // ENDTODO
+
                 frames++;
             } else {
                 try {
@@ -126,13 +96,6 @@ public class GameContainer implements Runnable
         dispose();
     }
 
-    private void init()
-    {
-		gameState = new GameState(this);
-    	// menuState = new MenuState(this);
-		State.setState(gameState);
-	}
-
     private void dispose() {
         //
     }
@@ -142,8 +105,8 @@ public class GameContainer implements Runnable
         return window;
     }
 
-	public KeyManager getKeyManager() {
-		return keyManager;
+	public Input getInput() {
+		return input;
 	}
 
 	public int getWidth() {

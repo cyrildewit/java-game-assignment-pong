@@ -2,8 +2,6 @@ package nl.cyrildewit.engine;
 
 import java.awt.image.DataBufferInt;
 
-import javax.swing.JFrame;
-
 public class Renderer
 {
     private int pW, pH;
