@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 
 public class EntityManager {
 
-	private Handler handler;
+	private GameContainer gc;
 	private ArrayList<Entity> entities;
 	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
 		@Override
@@ -20,8 +20,8 @@ public class EntityManager {
 		}
 	};
 
-	public EntityManager(Handler handler) {
-		this.handler = handler;
+	public EntityManager(GameContainer gc) {
+		this.gc = gc;
 		entities = new ArrayList<Entity>();
 	}
 
@@ -49,12 +49,12 @@ public class EntityManager {
 		entities.add(e);
 	}
 
-	public Handler getHandler() {
-		return handler;
+	public GameContainer getHandler() {
+		return gc;
 	}
 
-	public void setHandler(Handler handler) {
-		this.handler = handler;
+	public void setHandler(GameContainer gc) {
+		this.gc = gc;
 	}
 
 	public ArrayList<Entity> getEntities() {

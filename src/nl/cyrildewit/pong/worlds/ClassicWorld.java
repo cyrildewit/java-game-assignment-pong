@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.entities.movables.Ball;
@@ -22,23 +22,25 @@ public class ClassicWorld extends World {
 	private EntityManager entityManager;
 
 	private Random random = new Random();
-	
+
 	private Player playerOne, playerTwo;
 	private KeySet playerOneKeySet, playerTwoKeySet;
 
-	public ClassicWorld(Handler handler) {
-		super(handler);
+	public ClassicWorld(GameContainer gc) {
+		super(gc);
 
-		entityManager = new EntityManager(handler);
-		
-		playerOneKeySet = new PlayerOneKeySet(handler);
-		playerTwoKeySet = new PlayerTwoKeySet(handler);
-		
+		entityManager = new EntityManager(gc);
+
+		playerOneKeySet = new PlayerOneKeySet(gc);
+		playerTwoKeySet = new PlayerTwoKeySet(gc);
+
 		initEntities();
 	}
 
 	public void tick() {
 		entityManager.tick();
+
+        Systemm.out.println("tICKKK");
 	}
 
 	public void render(Graphics g) {
@@ -46,37 +48,37 @@ public class ClassicWorld extends World {
 
 		entityManager.render(g);
 	}
-	
-	public void initEntities() {
-		int centerX = handler.getWidth() / 2;
-		int centerY = handler.getHeight() / 2;
 
-		playerOne = new Player(handler, ID.PlayerOne, playerOneKeySet, 30, handler.getHeight() / 2);
-		playerTwo = new Player(handler, ID.PlayerTwo, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2);
-		
-		Goal leftGoal = new Goal(handler, ID.PlayerOneGoal, 0, 0, 0, handler.getHeight());
-		Goal rightGoal = new Goal(handler, ID.PlayerTwoGoal, handler.getWidth(), 0, 5, handler.getHeight());
+	public void initEntities() {
+		int centerX = gc.getWidth() / 2;
+		int centerY = gc.getHeight() / 2;
+
+		playerOne = new Player(gc, ID.PlayerOne, playerOneKeySet, 30, gc.getHeight() / 2);
+		playerTwo = new Player(gc, ID.PlayerTwo, playerTwoKeySet, gc.getWidth() - 30, gc.getHeight() / 2);
+
+		Goal leftGoal = new Goal(gc, ID.PlayerOneGoal, 0, 0, 0, gc.getHeight());
+		Goal rightGoal = new Goal(gc, ID.PlayerTwoGoal, gc.getWidth(), 0, 5, gc.getHeight());
 
 		entityManager.addEntity(leftGoal);
 		entityManager.addEntity(rightGoal);
-		
+
 		entityManager.addEntity(playerOne);
 		entityManager.addEntity(playerTwo);
-		entityManager.addEntity(new Ball(handler, ID.Ball, centerX, random.nextInt(centerY), 15));
+		entityManager.addEntity(new Ball(gc, ID.Ball, centerX, random.nextInt(centerY), 15));
 	}
 
 	public void buildWorld(Graphics g) {
 		// Background
 		g.setColor(Color.black);
-		g.fillRect(0,  0,  handler.getWidth(), handler.getHeight());
+		g.fillRect(0,  0,  gc.getWidth(), gc.getHeight());
 
 		// Net
 		Graphics2D g2d = (Graphics2D)g;
-		float dashHeight = (float) handler.getHeight() / 20;
+		float dashHeight = (float) gc.getHeight() / 20;
  		BasicStroke bs = new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{dashHeight}, 0);
 		g2d.setColor(Color.white);
 		g2d.setStroke(bs);
-		g2d.drawLine(handler.getWidth() / 2, 0, handler.getWidth() / 2, handler.getHeight());
+		g2d.drawLine(gc.getWidth() / 2, 0, gc.getWidth() / 2, gc.getHeight());
 		g2d.setStroke(new BasicStroke());
 	}
 

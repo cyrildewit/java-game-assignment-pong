@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 import nl.cyrildewit.pong.entities.Entity;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
@@ -19,8 +19,8 @@ public class Ball extends StaticEntry {
 	protected float speed;
 	protected float xMove, yMove;
 
-	public Ball(Handler handler, ID id, float x, float y, int width, int height) {
-		super(handler, id, x, y, width, height);
+	public Ball(GameContainer gc, ID id, float x, float y, int width, int height) {
+		super(gc, id, x, y, width, height);
 
 		bounds.x = 0;
 		bounds.y = 0;
@@ -76,7 +76,7 @@ public class Ball extends StaticEntry {
 	public boolean checkCollisionWithGoal() {
 		if (xMove < 0 && x <= 0) { // Up
 			return true;
-		} else if (xMove < 0  && x >= handler.getWidth() - width) {
+		} else if (xMove < 0  && x >= gc.getWidth() - width) {
 			return true;
 		}
 
@@ -124,7 +124,7 @@ public class Ball extends StaticEntry {
 				x += xMove;
 			}
 		} else { // Down
-			if (x >= handler.getWidth() - width) { // Bounce the ball back
+			if (x >= gc.getWidth() - width) { // Bounce the ball back
 				xMove *= -1;
 			} else {
 				x += xMove;
@@ -141,7 +141,7 @@ public class Ball extends StaticEntry {
 				y += yMove;
 			}
 		} else { // Down
-			if (y >= handler.getHeight() - height) { // Bounce the ball back
+			if (y >= gc.getHeight() - height) { // Bounce the ball back
 				yMove *= -1;
 			} else {
 				y += yMove;

@@ -2,12 +2,12 @@ package nl.cyrildewit.pong.state;
 
 import java.awt.Graphics;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 
 public class MenuState extends State {
 
-	public MenuState(Handler handler) {
-		super(handler);
+	public MenuState(GameContainer gc) {
+		super(gc);
 	}
 
 	@Override

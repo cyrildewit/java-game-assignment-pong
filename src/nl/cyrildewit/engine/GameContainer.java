@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import nl.cyrildewit.pong.state.GameState;
 import nl.cyrildewit.pong.state.State;
+import nl.cyrildewit.pong.worlds.World;
 
 public class GameContainer implements Runnable
 {
@@ -18,10 +19,21 @@ public class GameContainer implements Runnable
     private float scale = 1f;
     private String title;
 
-	private Graphics g;
-
 	// State
 	private State gameState;
+
+    // World
+    private World world;
+
+    public World getWorld()
+    {
+        return world;
+    }
+
+    public void setWorld(World world)
+    {
+        this.world = world;
+    }
 
     public GameContainer()
     {
@@ -30,6 +42,9 @@ public class GameContainer implements Runnable
 
     public synchronized void start()
     {
+        // TEMP
+        init();
+        // ENDTEMP
         window = new Window(this);
         renderer = new Renderer(this);
         keyManager = new KeyManager();
@@ -78,7 +93,9 @@ public class GameContainer implements Runnable
                 // TODO: Update game
 
                 keyManager.tick();
-                tick();
+                if (State.getState() != null) {
+                    State.getState().tick();
+                }
                 // ENDTODO
                 if (frameTime >= 1.0) {
                     frameTime = 0;
@@ -92,7 +109,9 @@ public class GameContainer implements Runnable
                 // TODO: Render game
                 renderer.clear();
                 window.update();
-                render();
+                if (State.getState() != null) {
+                    State.getState().render(g);
+                }
                 // ENDTODO
                 frames++;
             } else {
@@ -109,27 +128,10 @@ public class GameContainer implements Runnable
 
     private void init()
     {
-
-		gameState = new GameState(handler);
-//		menuState = new MenuState(handler);
+		gameState = new GameState(this);
+    	// menuState = new MenuState(this);
 		State.setState(gameState);
 	}
-
-    private void tick()
-    {
-		keyManager.tick();
-
-        if (State.getState() != null) {
-        	State.getState().tick();
-        }
-	}
-
-    private void render()
-    {
-		if (State.getState() != null) {
-        	State.getState().render(g);
-        }
-    }
 
     private void dispose() {
         //

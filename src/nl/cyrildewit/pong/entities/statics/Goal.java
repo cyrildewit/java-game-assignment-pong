@@ -3,15 +3,15 @@ package nl.cyrildewit.pong.entities.statics;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 import nl.cyrildewit.pong.entities.Entity;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
 
 public class Goal extends StaticEntry {
 
-    public Goal(Handler handler, ID id, float x, float y, int width, int height) {
-        super(handler, id, x, y, width, height);
+    public Goal(GameContainer gc, ID id, float x, float y, int width, int height) {
+        super(gc, id, x, y, width, height);
 
         bounds.x = 0;
 		bounds.y = 0;
@@ -34,7 +34,7 @@ public class Goal extends StaticEntry {
      * Check if the Ball is touching the bounds of this goal.
      */
     public void checkGoal() {
-    	EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
+    	EntityManager entityManager = (EntityManager) gc.getWorld().getEntityManager();
 
         for(Entity e : entityManager.getEntities()) {
         	// If the current entity isn't an instance of the Ball class, continue

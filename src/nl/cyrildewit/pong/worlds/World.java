@@ -1,23 +1,23 @@
 package nl.cyrildewit.pong.worlds;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 
 public abstract class World {
 
-	protected Handler handler;
+	protected GameContainer gc;
 
-	public World(Handler handler) {
-		this.handler = handler;
+	public World(GameContainer gc) {
+		this.gc = gc;
 	}
 
 	public abstract Object getEntityManager();
 
-	public Handler getHandler() {
-		return handler;
+	public GameContainer getHandler() {
+		return gc;
 	}
 
-	public void setHandler(Handler handler) {
-		this.handler = handler;
+	public void setGameContainer(GameContainer gc) {
+		this.gc = gc;
 	}
 
 }

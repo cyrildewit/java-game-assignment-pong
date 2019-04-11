@@ -1,24 +1,24 @@
 package nl.cyrildewit.pong.input.keysets;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 
 public abstract class KeySet {
 
-	protected Handler handler;
+	protected GameContainer gc;
 
 	public int UP,
 			  DOWN;
 
-	public KeySet(Handler handler) {
-		this.handler = handler;
+	public KeySet(GameContainer gc) {
+		this.gc = gc;
 	}
 
 	public boolean up() {
-		return handler.getKeyManager().keyStatus(UP);
+		return gc.getKeyManager().keyStatus(UP);
 	}
 
 	public boolean down() {
-		return handler.getKeyManager().keyStatus(DOWN);
+		return gc.getKeyManager().keyStatus(DOWN);
 	}
 
 }

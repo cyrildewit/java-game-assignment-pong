@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 import nl.cyrildewit.pong.entities.ID;
 
 public class Ball extends MovableEntity {
@@ -12,8 +12,8 @@ public class Ball extends MovableEntity {
     private int diameter;
     private Random random;
 
-	public Ball(Handler handler, ID id, float x, float y, int diameter) {
-		super(handler, id, x, y, diameter, diameter);
+	public Ball(GameContainer gc, ID id, float x, float y, int diameter) {
+		super(gc, id, x, y, diameter, diameter);
 
         random = new Random();
 

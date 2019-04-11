@@ -3,19 +3,19 @@ package nl.cyrildewit.pong.entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 
 public abstract class Entity {
 
-	protected Handler handler;
+	protected GameContainer gc;
 	protected ID id;
 	protected float x, y;
 	protected int width, height;
 	protected boolean active = true;
 	protected Rectangle bounds;
 
-	public Entity(Handler handler, ID id, float x, float y, int width, int height) {
-		this.handler = handler;
+	public Entity(GameContainer gc, ID id, float x, float y, int width, int height) {
+		this.gc = gc;
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -30,7 +30,7 @@ public abstract class Entity {
 	public abstract void render(Graphics g);
 
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
-		EntityManager enitityManager = (EntityManager) handler.getWorld().getEntityManager();
+		EntityManager enitityManager = (EntityManager) gc.getWorld().getEntityManager();
 
 		for(Entity e : enitityManager.getEntities()) {
 			if(e.equals(this)) {

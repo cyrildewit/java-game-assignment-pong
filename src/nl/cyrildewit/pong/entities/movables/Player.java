@@ -3,7 +3,7 @@ package nl.cyrildewit.pong.entities.movables;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 import nl.cyrildewit.pong.entities.Entity;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
@@ -16,8 +16,8 @@ public class Player extends MovableEntity {
 
     protected KeySet inputKeySet;
 
-	public Player(Handler handler, ID id, KeySet inputKeySet, float x, float y) {
-		super(handler, id, x, y, DEFAULT_PLAYER_WIDTH, DEFAULT_PLAYER_HEIGHT);
+	public Player(GameContainer gc, ID id, KeySet inputKeySet, float x, float y) {
+		super(gc, id, x, y, DEFAULT_PLAYER_WIDTH, DEFAULT_PLAYER_HEIGHT);
 
 		this.inputKeySet = inputKeySet;
 
@@ -50,7 +50,7 @@ public class Player extends MovableEntity {
 	}
     
     public void checkBallCollision() {
-    	EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
+    	EntityManager entityManager = (EntityManager) gc.getWorld().getEntityManager();
 
         for(Entity e : entityManager.getEntities()) {
         	// If the current entity isn't an instance of the Ball class, continue

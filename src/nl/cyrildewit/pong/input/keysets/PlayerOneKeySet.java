@@ -2,12 +2,12 @@ package nl.cyrildewit.pong.input.keysets;
 
 import java.awt.event.KeyEvent;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 
 public class PlayerOneKeySet extends KeySet {
 
-	public PlayerOneKeySet(Handler handler) {
-		super(handler);
+	public PlayerOneKeySet(GameContainer gc) {
+		super(gc);
 		
 		UP = KeyEvent.VK_W;
 		DOWN = KeyEvent.VK_S;

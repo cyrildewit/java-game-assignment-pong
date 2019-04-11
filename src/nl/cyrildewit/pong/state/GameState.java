@@ -2,18 +2,18 @@ package nl.cyrildewit.pong.state;
 
 import java.awt.Graphics;
 
-import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.engine.GameContainer;
 import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class GameState extends State {
 
 	private ClassicWorld world;
 
-	public GameState(Handler handler) {
-		super(handler);
+	public GameState(GameContainer gc) {
+		super(gc);
 
-		world = new ClassicWorld(handler);
-		handler.setWorld(world);
+		world = new ClassicWorld(gc);
+		gc.setWorld(world);
 	}
 
 	@Override
