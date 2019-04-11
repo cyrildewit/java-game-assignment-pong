@@ -1,12 +1,11 @@
-package nl.cyrildewit.pong.window;
+package nl.cyrildewit.engine;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-
-import nl.cyrildewit.pong.GameContainer;;
 
 import javax.swing.JFrame;
 
@@ -17,9 +16,6 @@ public class Window {
     private Canvas canvas;
     private BufferStrategy bs;
     private Graphics g;
-
-	private String title;
-	private int width, height;
 
     public Window(GameContainer gc)
     {
@@ -49,15 +45,15 @@ public class Window {
 
     public void update()
     {
-        //
+        g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
+        bs.show();
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 
 	public Canvas getCanvas() {
 		return canvas;
 	}
-
-	public JFrame getFrame() {
-		return frame;
-	}
-
 }

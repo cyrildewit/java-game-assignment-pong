@@ -1,10 +1,7 @@
-package nl.cyrildewit.pong;
+package nl.cyrildewit.engine;
 
 import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
 
-import nl.cyrildewit.pong.window.Window;
-import nl.cyrildewit.pong.input.KeyManager;
 import nl.cyrildewit.pong.state.GameState;
 import nl.cyrildewit.pong.state.State;
 
@@ -13,6 +10,7 @@ public class GameContainer implements Runnable
     private Thread thread;
     private Window window;
     private Renderer renderer;
+    private KeyManager keyManager;
 
     private boolean running = false;
     private final double UPDATE_CAP = 1.0 / 60.0;
@@ -20,25 +18,22 @@ public class GameContainer implements Runnable
     private float scale = 1f;
     private String title;
 
-    private BufferStrategy displayBufferStrategy;
 	private Graphics g;
 
 	// State
 	private State gameState;
 
-	// Input
-	private KeyManager keyManager;
-
-	// Handler
-	private Handler handler;
-
     public GameContainer()
     {
-		//
+        //
     }
 
     public synchronized void start()
     {
+        window = new Window(this);
+        renderer = new Renderer(this);
+        keyManager = new KeyManager();
+
         thread = new Thread(this);
         thread.start();
     }
@@ -52,48 +47,68 @@ public class GameContainer implements Runnable
         }
     }
 
-    @Override
     public void run()
     {
-        init();
+        running = true;
 
-        int fps = 60;
-        double timePerTick = 1000000000 / fps;
-        double delta = 0;
-        long now;
-        long lastTime = System.nanoTime();
-        long timer = 0;
-        int ticks = 0;
+        boolean render = false;
+        double firstTime = 0;
+        double lastTime = System.nanoTime() / 1000000000.0;
+        double passedTime = 0;
+        double unprocessedTime = 0;
+
+        double frameTime = 0;
+        int frames = 0;
+        int fps = 0;
 
         while (running) {
-            now = System.nanoTime();
-            delta += (now - lastTime) / timePerTick;
-            timer += now - lastTime;
-            lastTime = now;
+            render = false;
 
-            if (delta >= 1) {
+            firstTime = System.nanoTime() / 1000000000.0;
+            passedTime = firstTime - lastTime;
+            lastTime = firstTime;
+
+            unprocessedTime += passedTime;
+            frameTime += passedTime;
+
+            while (unprocessedTime >= UPDATE_CAP) {
+                unprocessedTime -= UPDATE_CAP;
+                render = true;
+
+                // TODO: Update game
+
+                keyManager.tick();
                 tick();
-                render();
-                ticks++;
-                delta--;
+                // ENDTODO
+                if (frameTime >= 1.0) {
+                    frameTime = 0;
+                    fps = frames;
+                    frames = 0;
+                    System.out.println("FPS: " + fps);
+                }
             }
 
-            if (timer >= 1000000000) {
-                System.out.println("Ticks and Frames: " + ticks);
-                ticks = 0;
-                timer = 0;
+            if (render) {
+                // TODO: Render game
+                renderer.clear();
+                window.update();
+                render();
+                // ENDTODO
+                frames++;
+            } else {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        stop();
+        dispose();
     }
 
     private void init()
     {
-		display = new Display(title, width, height);
-		display.getFrame().addKeyListener(keyManager);
-
-		handler = new Handler(this);
 
 		gameState = new GameState(handler);
 //		menuState = new MenuState(handler);
@@ -111,29 +126,19 @@ public class GameContainer implements Runnable
 
     private void render()
     {
-		displayBufferStrategy = display.getCanvas().getBufferStrategy();
-
-		if (displayBufferStrategy == null) {
-			display.getCanvas().createBufferStrategy(3);
-			return;
-		}
-
-		g = displayBufferStrategy.getDrawGraphics();
-		g.clearRect(0, 0, width, height);
-
 		if (State.getState() != null) {
         	State.getState().render(g);
         }
-
-		displayBufferStrategy.show();
-		g.dispose();
     }
 
     private void dispose() {
         //
     }
 
-
+    public Window getWindow()
+    {
+        return window;
+    }
 
 	public KeyManager getKeyManager() {
 		return keyManager;

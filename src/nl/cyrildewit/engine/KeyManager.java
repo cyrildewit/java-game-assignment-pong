@@ -1,4 +1,4 @@
-package nl.cyrildewit.pong.input;
+package nl.cyrildewit.engine;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
