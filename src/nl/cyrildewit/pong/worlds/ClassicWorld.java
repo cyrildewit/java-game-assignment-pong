@@ -8,10 +8,10 @@ import java.util.Random;
 
 import nl.cyrildewit.engine.GameContainer;
 import nl.cyrildewit.engine.worlds.World;
-import nl.cyrildewit.pong.entities.EntityManager;
+import nl.cyrildewit.engine.entities.EntityManager;
 import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.entities.movables.Ball;
-import nl.cyrildewit.pong.entities.movables.Player;
+import nl.cyrildewit.pong.entities.Player;
 import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerOneKeySet;
@@ -52,18 +52,18 @@ public class ClassicWorld extends World {
 		int centerX = gc.getWidth() / 2;
 		int centerY = gc.getHeight() / 2;
 
-		playerOne = new Player(gc, ID.PlayerOne, playerOneKeySet, 30, gc.getHeight() / 2);
-		playerTwo = new Player(gc, ID.PlayerTwo, playerTwoKeySet, gc.getWidth() - 30, gc.getHeight() / 2);
+		playerOne = new Player(gc, playerOneKeySet, 30, gc.getHeight() / 2);
+		playerTwo = new Player(gc, playerTwoKeySet, gc.getWidth() - 30, gc.getHeight() / 2);
 
-		Goal leftGoal = new Goal(gc, ID.PlayerOneGoal, 0, 0, 0, gc.getHeight());
-		Goal rightGoal = new Goal(gc, ID.PlayerTwoGoal, gc.getWidth(), 0, 5, gc.getHeight());
+		Goal leftGoal = new Goal(gc, 0, 0, 0, gc.getHeight());
+		Goal rightGoal = new Goal(gc, gc.getWidth(), 0, 5, gc.getHeight());
 
 		entityManager.addEntity(leftGoal);
 		entityManager.addEntity(rightGoal);
 
 		entityManager.addEntity(playerOne);
 		entityManager.addEntity(playerTwo);
-		entityManager.addEntity(new Ball(gc, ID.Ball, centerX, random.nextInt(centerY), 15));
+		entityManager.addEntity(new Ball(gc, centerX, random.nextInt(centerY), 15));
 	}
 
 	public void buildWorld(Graphics g) {

@@ -1,7 +1,6 @@
-package nl.cyrildewit.engine.entities.statics;
+package nl.cyrildewit.engine.entities;
 
 import nl.cyrildewit.engine.GameContainer;
-import nl.cyrildewit.engine.entities.Entity;
 
 public abstract class StaticEntry extends Entity {
 

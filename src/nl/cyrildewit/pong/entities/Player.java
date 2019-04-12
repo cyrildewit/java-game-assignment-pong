@@ -1,11 +1,12 @@
-package nl.cyrildewit.pong.entities.movables;
+package nl.cyrildewit.pong.entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import nl.cyrildewit.engine.GameContainer;
-import nl.cyrildewit.pong.entities.Entity;
-import nl.cyrildewit.pong.entities.EntityManager;
+import nl.cyrildewit.engine.entities.Entity;
+import nl.cyrildewit.engine.entities.EntityManager;
+import nl.cyrildewit.engine.entities.MovableEntity;
 import nl.cyrildewit.pong.entities.ID;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 
@@ -16,8 +17,8 @@ public class Player extends MovableEntity {
 
     protected KeySet inputKeySet;
 
-	public Player(GameContainer gc, ID id, KeySet inputKeySet, float x, float y) {
-		super(gc, id, x, y, DEFAULT_PLAYER_WIDTH, DEFAULT_PLAYER_HEIGHT);
+	public Player(GameContainer gc, KeySet inputKeySet, float x, float y) {
+		super(gc, x, y, DEFAULT_PLAYER_WIDTH, DEFAULT_PLAYER_HEIGHT);
 
 		this.inputKeySet = inputKeySet;
 
@@ -28,7 +29,7 @@ public class Player extends MovableEntity {
 	}
 
 	@Override
-	public void tick() {
+	public void update() {
         getInput();
         move();
         checkBallCollision();
@@ -45,10 +46,10 @@ public class Player extends MovableEntity {
 		// xMove = 0;
 		yMove = 0;
 
-		if (inputKeySet.up()) yMove = -speed;
-		if (inputKeySet.down()) yMove = speed;
+		// if (gc.getInput().isKey(KeyCo)) yMove = -speed;
+		// if (inputKeySet.down()) yMove = speed;
 	}
-    
+
     public void checkBallCollision() {
     	EntityManager entityManager = (EntityManager) gc.getWorld().getEntityManager();
 

@@ -10,7 +10,7 @@ import nl.cyrildewit.pong.entities.ID;
 
 public class Goal extends StaticEntry {
 
-    public Goal(GameContainer gc, ID id, float x, float y, int width, int height) {
+    public Goal(GameContainer gc, float x, float y, int width, int height) {
         super(gc, id, x, y, width, height);
 
         bounds.x = 0;

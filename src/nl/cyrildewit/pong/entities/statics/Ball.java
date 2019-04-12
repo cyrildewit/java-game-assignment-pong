@@ -19,8 +19,8 @@ public class Ball extends StaticEntry {
 	protected float speed;
 	protected float xMove, yMove;
 
-	public Ball(GameContainer gc, ID id, float x, float y, int width, int height) {
-		super(gc, id, x, y, width, height);
+	public Ball(GameContainer gc, float x, float y, int width, int height) {
+		super(gc, x, y, width, height);
 
 		bounds.x = 0;
 		bounds.y = 0;

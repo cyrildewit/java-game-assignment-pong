@@ -1,7 +1,6 @@
 package nl.cyrildewit.engine.entities;
 
 import nl.cyrildewit.engine.GameContainer;
-import nl.cyrildewit.engine.Entity;
 
 public abstract class MovableEntity extends Entity {
 

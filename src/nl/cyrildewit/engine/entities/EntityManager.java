@@ -30,7 +30,7 @@ public class EntityManager {
 
 		while(it.hasNext()){
 			Entity e = it.next();
-			e.tick();
+			e.update();
 			if(! e.isActive()) {
 				it.remove();
 			}

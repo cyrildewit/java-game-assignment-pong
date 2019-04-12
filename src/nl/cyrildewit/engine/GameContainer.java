@@ -67,8 +67,7 @@ public class GameContainer implements Runnable
                 unprocessedTime -= UPDATE_CAP;
                 render = true;
 
-                game.update(this, (float) UPDATE_CAP);
-
+                game.update(this);
                 input.update();
 
                 if (frameTime >= 1.0) {

@@ -1,4 +1,4 @@
-package nl.cyrildewit.pong.entities;
+package nl.cyrildewit.engine.entities;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -23,7 +23,7 @@ public abstract class Entity {
 		bounds = new Rectangle(0, 0, width, height);
 	}
 
-    public abstract void tick();
+    public abstract void update();
 
 	public abstract void render(Graphics g);
 
