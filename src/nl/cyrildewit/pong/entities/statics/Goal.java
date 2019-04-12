@@ -6,12 +6,12 @@ import java.awt.Graphics;
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
 import nl.cyrildewit.pong.entities.EntityManager;
-import nl.cyrildewit.pong.entities.ID;
+import nl.cyrildewit.pong.entities.EntityType;
 
 public class Goal extends StaticEntry {
 
-    public Goal(Handler handler, ID id, float x, float y, int width, int height) {
-        super(handler, id, x, y, width, height);
+    public Goal(Handler handler, EntityType type, float x, float y, int width, int height) {
+        super(handler, type, x, y, width, height);
 
         bounds.x = 0;
 		bounds.y = 0;
@@ -38,13 +38,13 @@ public class Goal extends StaticEntry {
 
         for(Entity e : entityManager.getEntities()) {
         	// If the current entity isn't an instance of the Ball class, continue
-            if(! e.getId().equals(ID.Ball)) {
+            if(! e.getType().equals(EntityType.Ball)) {
                 continue;
             }
 
             // Check if the entity is touching the bounds of this goal
 			if(e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-				System.out.println("Goalll: " + getId());
+				System.out.println("Goalll: " + getType());
 			}
 		}
     }

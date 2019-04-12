@@ -5,15 +5,15 @@ import java.awt.Graphics;
 import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
-import nl.cyrildewit.pong.entities.ID;
+import nl.cyrildewit.pong.entities.EntityType;
 
 public class Ball extends MovableEntity {
 
     private int diameter;
     private Random random;
 
-	public Ball(Handler handler, ID id, float x, float y, int diameter) {
-		super(handler, id, x, y, diameter, diameter);
+	public Ball(Handler handler, EntityType type, float x, float y, int diameter) {
+		super(handler, type, x, y, diameter, diameter);
 
         random = new Random();
 

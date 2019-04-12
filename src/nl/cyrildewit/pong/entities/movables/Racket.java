@@ -6,18 +6,18 @@ import java.awt.Graphics;
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
 import nl.cyrildewit.pong.entities.EntityManager;
-import nl.cyrildewit.pong.entities.ID;
+import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 
-public class Player extends MovableEntity {
+public class Racket extends MovableEntity {
 
     public static final int DEFAULT_PLAYER_WIDTH = 16,
                             DEFAULT_PLAYER_HEIGHT = 128;
 
     protected KeySet inputKeySet;
 
-	public Player(Handler handler, ID id, KeySet inputKeySet, float x, float y) {
-		super(handler, id, x, y, DEFAULT_PLAYER_WIDTH, DEFAULT_PLAYER_HEIGHT);
+	public Racket(Handler handler, EntityType type, KeySet inputKeySet, float x, float y) {
+		super(handler, type, x, y, DEFAULT_PLAYER_WIDTH, DEFAULT_PLAYER_HEIGHT);
 
 		this.inputKeySet = inputKeySet;
 
@@ -48,13 +48,13 @@ public class Player extends MovableEntity {
 		if (inputKeySet.up()) yMove = -speed;
 		if (inputKeySet.down()) yMove = speed;
 	}
-    
+
     public void checkBallCollision() {
     	EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
 
         for(Entity e : entityManager.getEntities()) {
         	// If the current entity isn't an instance of the Ball class, continue
-            if(! e.getId().equals(ID.Ball)) {
+            if(! e.getType().equals(EntityType.Ball)) {
                 continue;
             }
 

@@ -8,9 +8,9 @@ import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.EntityManager;
-import nl.cyrildewit.pong.entities.ID;
+import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.entities.movables.Ball;
-import nl.cyrildewit.pong.entities.movables.Player;
+import nl.cyrildewit.pong.entities.movables.Racket;
 import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerOneKeySet;
@@ -22,18 +22,18 @@ public class ClassicWorld extends World {
 	private EntityManager entityManager;
 
 	private Random random = new Random();
-	
-	private Player playerOne, playerTwo;
+
+	private Racket playerOne, playerTwo;
 	private KeySet playerOneKeySet, playerTwoKeySet;
 
 	public ClassicWorld(Handler handler) {
 		super(handler);
 
 		entityManager = new EntityManager(handler);
-		
+
 		playerOneKeySet = new PlayerOneKeySet(handler);
 		playerTwoKeySet = new PlayerTwoKeySet(handler);
-		
+
 		initEntities();
 	}
 
@@ -46,23 +46,23 @@ public class ClassicWorld extends World {
 
 		entityManager.render(g);
 	}
-	
+
 	public void initEntities() {
 		int centerX = handler.getWidth() / 2;
 		int centerY = handler.getHeight() / 2;
 
-		playerOne = new Player(handler, ID.PlayerOne, playerOneKeySet, 30, handler.getHeight() / 2);
-		playerTwo = new Player(handler, ID.PlayerTwo, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2);
-		
-		Goal leftGoal = new Goal(handler, ID.PlayerOneGoal, 0, 0, 0, handler.getHeight());
-		Goal rightGoal = new Goal(handler, ID.PlayerTwoGoal, handler.getWidth(), 0, 5, handler.getHeight());
+		playerOne = new Racket(handler, EntityType.Racket, playerOneKeySet, 30, handler.getHeight() / 2);
+		playerTwo = new Racket(handler, EntityType.Racket, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2);
+
+		Goal leftGoal = new Goal(handler, EntityType.Goal, 0, 0, 0, handler.getHeight());
+		Goal rightGoal = new Goal(handler, EntityType.Goal, handler.getWidth(), 0, 5, handler.getHeight());
 
 		entityManager.addEntity(leftGoal);
 		entityManager.addEntity(rightGoal);
-		
+
 		entityManager.addEntity(playerOne);
 		entityManager.addEntity(playerTwo);
-		entityManager.addEntity(new Ball(handler, ID.Ball, centerX, random.nextInt(centerY), 15));
+		entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, random.nextInt(centerY), 15));
 	}
 
 	public void buildWorld(Graphics g) {
