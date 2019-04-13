@@ -14,11 +14,11 @@ public abstract class KeySet {
 	}
 
 	public boolean up() {
-		return handler.getKeyManager().keyStatus(UP);
+		return handler.getInput().isKey(UP);
 	}
 
 	public boolean down() {
-		return handler.getKeyManager().keyStatus(DOWN);
+		return handler.getInput().isKey(DOWN);
 	}
 
 }

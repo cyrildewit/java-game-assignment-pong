@@ -8,15 +8,15 @@ import nl.cyrildewit.pong.Handler;
 public abstract class Entity {
 
 	protected Handler handler;
-	protected ID id;
+	protected EntityType type;
 	protected float x, y;
 	protected int width, height;
 	protected boolean active = true;
 	protected Rectangle bounds;
 
-	public Entity(Handler handler, ID id, float x, float y, int width, int height) {
+	public Entity(Handler handler, EntityType type, float x, float y, int width, int height) {
 		this.handler = handler;
-		this.id = id;
+		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -25,25 +25,9 @@ public abstract class Entity {
 		bounds = new Rectangle(0, 0, width, height);
 	}
 
-    public abstract void tick();
+    public abstract void update();
 
 	public abstract void render(Graphics g);
-
-	public boolean checkEntityCollisions(float xOffset, float yOffset) {
-		EntityManager enitityManager = (EntityManager) handler.getWorld().getEntityManager();
-
-		for(Entity e : enitityManager.getEntities()) {
-			if(e.equals(this)) {
-				continue;
-			}
-
-			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
 
 	public Rectangle getCollisionBounds(float xOffset, float yOffset){
 		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
@@ -89,12 +73,12 @@ public abstract class Entity {
 		this.active = active;
 	}
 
-	public ID getId() {
-		return id;
+	public EntityType getType() {
+		return type;
 	}
 
-	public void setId(ID id) {
-		this.id = id;
+	public void setId(EntityType type) {
+		this.type = type;
 	}
 
 }

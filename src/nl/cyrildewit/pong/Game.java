@@ -1,121 +1,122 @@
 package nl.cyrildewit.pong;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import nl.cyrildewit.pong.display.Display;
-import nl.cyrildewit.pong.input.KeyManager;
+import nl.cyrildewit.pong.input.Input;
 import nl.cyrildewit.pong.state.GameState;
-import nl.cyrildewit.pong.state.MenuState;
 import nl.cyrildewit.pong.state.State;
 
-public class Game implements Runnable
-{
+public class Game implements Runnable {
+    private Thread thread;
+    private Display display;
+    private Input input;
+
+    private BufferStrategy displayBufferStrategy;
+    private Graphics g;
+
     private boolean running = false;
+    private final double UPDATE_CAP = 1.0 / 60.0;
     private int width = 320, height = 240;
-//    private float scale = 1f;
+    private float scale = 1f;
     private String title;
 
-	private Display display;
-	private Thread thread;
+    private State gameState;
+    private Handler handler;
 
-	private BufferStrategy displayBufferStrategy;
-	private Graphics g;
-
-	// State
-	private State gameState;
-
-	// Input
-	private KeyManager keyManager;
-
-	// Handler
-	private Handler handler;
-
-    public Game(String title, int width, int height)
-    {
-		this.title = title;
-		this.width = width;
-		this.height = height;
-		keyManager = new KeyManager();
+    public Game(String title, int width, int height) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
     }
 
-    public synchronized void start()
-    {
-        if (running) {
-            return;
-        }
+    public Game(String title) {
+        this.title = title;
+    }
 
-        running = true;
+    public synchronized void start() {
+        handler = new Handler(this);
+
+        display = new Display(handler);
+        input = new Input(handler);
+
+        gameState = new GameState(handler);
+        State.setState(gameState);
+
         thread = new Thread(this);
         thread.start();
     }
 
-    public synchronized void stop()
-    {
-        if (!running) {
-            return;
-        }
-
-        running = false;
-
+    public synchronized void stop() {
         try {
             thread.join();
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void run()
-    {
-        init();
+    public void run() {
+        running = true;
 
-        int fps = 60;
-        double timePerTick = 1000000000 / fps;
-        double delta = 0;
-        long now;
-        long lastTime = System.nanoTime();
-        long timer = 0;
-        int ticks = 0;
+        boolean render = false;
+        double firstTime = 0;
+        double lastTime = System.nanoTime() / 1000000000.0;
+        double passedTime = 0;
+        double unprocessedTime = 0;
+
+        double frameTime = 0;
+        int frames = 0;
+        int fps = 0;
 
         while (running) {
-            now = System.nanoTime();
-            delta += (now - lastTime) / timePerTick;
-            timer += now - lastTime;
-            lastTime = now;
+            render = false;
 
-            if (delta >= 1) {
+            firstTime = System.nanoTime() / 1000000000.0;
+            passedTime = firstTime - lastTime;
+            lastTime = firstTime;
+
+            unprocessedTime += passedTime;
+            frameTime += passedTime;
+
+            while (unprocessedTime >= UPDATE_CAP) {
+                unprocessedTime -= UPDATE_CAP;
+                render = true;
+
                 tick();
-                render();
-                ticks++;
-                delta--;
+
+                if (frameTime >= 1.0) {
+                    frameTime = 0;
+                    fps = frames;
+                    frames = 0;
+                    System.out.println("FPS: " + fps);
+                }
             }
 
-            if (timer >= 1000000000) {
-                System.out.println("Ticks and Frames: " + ticks);
-                ticks = 0;
-                timer = 0;
+            if (render) {
+                render();
+
+                frames++;
+            } else {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        stop();
+        dispose();
     }
 
-    private void init()
-    {
-		display = new Display(title, width, height);
-		display.getFrame().addKeyListener(keyManager);
-
-		handler = new Handler(this);
-
-		gameState = new GameState(handler);
-//		menuState = new MenuState(handler);
-		State.setState(gameState);
-	}
+    private void dispose() {
+        //
+    }
 
     private void tick()
     {
-		keyManager.tick();
+		input.update();
 
         if (State.getState() != null) {
         	State.getState().tick();
@@ -124,36 +125,63 @@ public class Game implements Runnable
 
     private void render()
     {
-		displayBufferStrategy = display.getCanvas().getBufferStrategy();
-
-		if (displayBufferStrategy == null) {
-			display.getCanvas().createBufferStrategy(3);
-			return;
-		}
-
-		g = displayBufferStrategy.getDrawGraphics();
-		g.clearRect(0, 0, width, height);
+        displayBufferStrategy = display.getCanvas().getBufferStrategy();
+        if (displayBufferStrategy == null) {
+            display.getCanvas().createBufferStrategy(3);
+            return;
+        }
+        g = displayBufferStrategy.getDrawGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, getDisplay().getCanvas().getWidth(), getDisplay().getCanvas().getHeight());
+        // g.fillRect(0, 0, (int) (getWidth() * getScale()), (int) (getHeight() * getScale()));
 
 		if (State.getState() != null) {
         	State.getState().render(g);
         }
 
+        g.dispose();
 		displayBufferStrategy.show();
-		g.dispose();
 	}
 
+	public Input getInput() {
+		return input;
+    }
 
-
-	public KeyManager getKeyManager() {
-		return keyManager;
-	}
+    public Display getDisplay()
+    {
+        return display;
+    }
 
 	public int getWidth() {
-		return width;
-	}
+        return width;
+    }
 
-	public int getHeight() {
-		return height;
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }
