@@ -52,9 +52,9 @@ public class ClassicWorld extends World {
 		int centerX = handler.getWidth() / 2;
 		int centerY = handler.getHeight() / 2;
 
-        // Left Racket
+        // Left Paddle
         entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerOneKeySet, 30, handler.getHeight() / 2));
-        // Right Racket
+        // Right Paddle
 		entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2));
 
         // Left Goal

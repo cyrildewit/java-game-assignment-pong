@@ -9,13 +9,13 @@ import nl.cyrildewit.pong.input.keysets.KeySet;
 
 public class Paddle extends MovableEntity {
 
-    public static final int DEFAULT_RACKET_WIDTH = 14,
-                            DEFAULT_RACKET_HEIGHT = 80;
+    public static final int DEFAULT_PADDLE_WIDTH = 14,
+                            DEFAULT_PADDLE_HEIGHT = 80;
 
     protected KeySet inputKeySet;
 
 	public Paddle(Handler handler, EntityType type, KeySet inputKeySet, float x, float y) {
-		super(handler, type, x, y, DEFAULT_RACKET_WIDTH, DEFAULT_RACKET_HEIGHT);
+		super(handler, type, x, y, DEFAULT_PADDLE_WIDTH, DEFAULT_PADDLE_HEIGHT);
 
 		this.inputKeySet = inputKeySet;
 
@@ -33,7 +33,7 @@ public class Paddle extends MovableEntity {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.white);
-		g.fillRect((int) x, (int) y, width, height);
+		g.fillRect((int) x - (width / 2), (int) y - (height / 2), width, height);
     }
 
 }
