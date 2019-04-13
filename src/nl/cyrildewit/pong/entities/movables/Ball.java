@@ -26,15 +26,14 @@ public class Ball extends MovableEntity {
 	}
 
 	@Override
-	public void tick() {
-        move();
+	public void update() {
+        //
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// White ball
 		g.setColor(Color.white);
-		g.fillOval((int) x, (int) y, (int) height, (int) width);
+		g.fillOval((int) x - (width / 2), (int) y - (height / 2), (int) height, (int) width);
 	}
 
 }

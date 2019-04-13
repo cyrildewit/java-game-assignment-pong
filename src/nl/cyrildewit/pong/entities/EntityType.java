@@ -2,9 +2,10 @@ package nl.cyrildewit.pong.entities;
 
 public enum EntityType {
 
-    Racket(),
+    Paddle(),
     Ball(),
     Wall(),
-    Goal();
+    Goal(),
+    Net();
 
 }

@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import nl.cyrildewit.pong.Handler;
-import nl.cyrildewit.pong.entities.Entity;
-import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 
 public class Goal extends StaticEntry {
@@ -20,8 +18,8 @@ public class Goal extends StaticEntry {
     }
 
     @Override
-	public void tick() {
-		checkGoal();
+	public void update() {
+		//
 	}
 
     @Override
@@ -29,24 +27,5 @@ public class Goal extends StaticEntry {
 		g.setColor(Color.green);
 		g.fillRect((int) (x + bounds.x), (int) (y + bounds.y), (int) bounds.width, (int) bounds.height);
 	}
-
-    /**
-     * Check if the Ball is touching the bounds of this goal.
-     */
-    public void checkGoal() {
-    	EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
-
-        for(Entity e : entityManager.getEntities()) {
-        	// If the current entity isn't an instance of the Ball class, continue
-            if(! e.getType().equals(EntityType.Ball)) {
-                continue;
-            }
-
-            // Check if the entity is touching the bounds of this goal
-			if(e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-				System.out.println("Goalll: " + getType());
-			}
-		}
-    }
 
 }

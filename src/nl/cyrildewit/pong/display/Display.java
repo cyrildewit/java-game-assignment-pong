@@ -21,14 +21,15 @@ public class Display {
         canvas.setMinimumSize(s);
 
         frame = new JFrame(handler.getTitle());
-        frame.setSize(s);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // frame.setUndecorated(true);
         frame.setLayout(new BorderLayout());
         frame.add(canvas, BorderLayout.CENTER);
+        frame.setResizable(false);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
         frame.setVisible(true);
+
 	}
 
 	public Canvas getCanvas() {
