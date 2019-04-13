@@ -11,13 +11,13 @@ import nl.cyrildewit.pong.input.keysets.KeySet;
 
 public class Racket extends MovableEntity {
 
-    public static final int DEFAULT_PLAYER_WIDTH = 16,
-                            DEFAULT_PLAYER_HEIGHT = 128;
+    public static final int DEFAULT_RACKET_WIDTH = 14,
+                            DEFAULT_RACKET_HEIGHT = 80;
 
     protected KeySet inputKeySet;
 
 	public Racket(Handler handler, EntityType type, KeySet inputKeySet, float x, float y) {
-		super(handler, type, x, y, DEFAULT_PLAYER_WIDTH, DEFAULT_PLAYER_HEIGHT);
+		super(handler, type, x, y, DEFAULT_RACKET_WIDTH, DEFAULT_RACKET_HEIGHT);
 
 		this.inputKeySet = inputKeySet;
 
@@ -31,7 +31,6 @@ public class Racket extends MovableEntity {
 	public void tick() {
         getInput();
         move();
-        checkBallCollision();
 	}
 
 	@Override
@@ -42,29 +41,10 @@ public class Racket extends MovableEntity {
     }
 
     private void getInput() {
-		// xMove = 0;
 		yMove = 0;
 
 		if (inputKeySet.up()) yMove = -speed;
 		if (inputKeySet.down()) yMove = speed;
 	}
-
-    public void checkBallCollision() {
-    	EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
-
-        for(Entity e : entityManager.getEntities()) {
-        	// If the current entity isn't an instance of the Ball class, continue
-            if(! e.getType().equals(EntityType.Ball)) {
-                continue;
-            }
-
-            // Check if the entity is touching the bounds of this goal
-			if(e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-				Ball ball = (Ball) e;
-				ball.setXMove(-1 * ball.getXMove());
-				ball.setYMove(-1 * ball.getYMove());
-			}
-		}
-    }
 
 }
