@@ -12,20 +12,20 @@ public class Goal extends StaticEntry {
         super(handler, type, x, y, width, height);
 
         bounds.x = 0;
-		bounds.y = 0;
-		bounds.width = width;
-		bounds.height = height;
+        bounds.y = 0;
+        bounds.width = width;
+        bounds.height = height;
     }
 
     @Override
-	public void update() {
-		//
-	}
+    public void update() {
+        //
+    }
 
     @Override
-	public void render(Graphics g) {
-		g.setColor(Color.green);
-		g.fillRect((int) (x + bounds.x), (int) (y + bounds.y), (int) bounds.width, (int) bounds.height);
-	}
+    public void render(Graphics g) {
+        g.setColor(Color.green);
+        g.fillRect((int) (x + bounds.x), (int) (y + bounds.y), (int) bounds.width, (int) bounds.height);
+    }
 
 }

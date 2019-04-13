@@ -43,27 +43,27 @@ public abstract class MovableEntity extends Entity {
     }
 
     public float getSpeed() {
-		return speed;
-	}
+        return speed;
+    }
 
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
 
-	public float getXMove() {
-		return xMove;
-	}
+    public float getXMove() {
+        return xMove;
+    }
 
-	public void setXMove(float xMove) {
-		this.xMove = xMove;
-	}
+    public void setXMove(float xMove) {
+        this.xMove = xMove;
+    }
 
-	public float getYMove() {
-		return yMove;
-	}
+    public float getYMove() {
+        return yMove;
+    }
 
-	public void setYMove(float yMove) {
-		this.yMove = yMove;
-	}
+    public void setYMove(float yMove) {
+        this.yMove = yMove;
+    }
 
 }

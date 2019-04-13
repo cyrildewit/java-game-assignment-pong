@@ -4,20 +4,20 @@ import nl.cyrildewit.pong.Handler;
 
 public abstract class World {
 
-	protected Handler handler;
+    protected Handler handler;
 
-	public World(Handler handler) {
-		this.handler = handler;
-	}
+    public World(Handler handler) {
+        this.handler = handler;
+    }
 
-	public abstract Object getEntityManager();
+    public abstract Object getEntityManager();
 
-	public Handler getHandler() {
-		return handler;
-	}
+    public Handler getHandler() {
+        return handler;
+    }
 
-	public void setHandler(Handler handler) {
-		this.handler = handler;
-	}
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
 
 }

@@ -20,45 +20,45 @@ import nl.cyrildewit.pong.input.keysets.PlayerTwoKeySet;
 
 public class ClassicWorld extends World {
 
-	// Entities
-	private EntityManager entityManager;
-	private Random random;
+    // Entities
+    private EntityManager entityManager;
+    private Random random;
 
-	private KeySet playerOneKeySet, playerTwoKeySet;
+    private KeySet playerOneKeySet, playerTwoKeySet;
 
-	public ClassicWorld(Handler handler) {
-		super(handler);
+    public ClassicWorld(Handler handler) {
+        super(handler);
 
         entityManager = new EntityManager(handler);
         random = new Random();
 
-		playerOneKeySet = new PlayerOneKeySet(handler);
-		playerTwoKeySet = new PlayerTwoKeySet(handler);
+        playerOneKeySet = new PlayerOneKeySet(handler);
+        playerTwoKeySet = new PlayerTwoKeySet(handler);
 
-		initEntities();
-	}
+        initEntities();
+    }
 
-	public void tick() {
-		entityManager.tick();
-	}
+    public void tick() {
+        entityManager.tick();
+    }
 
-	public void render(Graphics g) {
-		buildWorld(g);
+    public void render(Graphics g) {
+        buildWorld(g);
 
-		entityManager.render(g);
-	}
+        entityManager.render(g);
+    }
 
-	public void initEntities() {
-		int centerX = handler.getWidth() / 2;
-		int centerY = handler.getHeight() / 2;
+    public void initEntities() {
+        int centerX = handler.getWidth() / 2;
+        int centerY = handler.getHeight() / 2;
 
         // Left Paddle
         entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerOneKeySet, 30, handler.getHeight() / 2));
         // Right Paddle
-		entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2));
+        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2));
 
         // Left Goal
-		entityManager.addEntity(new Goal(handler, EntityType.Goal, 0, 0, 0, handler.getHeight()));
+        entityManager.addEntity(new Goal(handler, EntityType.Goal, 0, 0, 0, handler.getHeight()));
         // Right Goal
         entityManager.addEntity(new Goal(handler, EntityType.Goal, handler.getWidth(), 0, 5, handler.getHeight()));
 
@@ -72,21 +72,21 @@ public class ClassicWorld extends World {
 
         // Ball
         entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, random.nextInt(centerY), 15));
-	}
+    }
 
-	public void buildWorld(Graphics g) {
-		// Background
-		g.setColor(Color.black);
+    public void buildWorld(Graphics g) {
+        // Background
+        g.setColor(Color.black);
         g.fillRect(0,  0,  handler.getWidth(), handler.getHeight());
 
         // int centerX = handler.getWidth() / 2;
         // int centerY = handler.getHeight() / 2;
         // g.setColor(Color.GREEN);
         // g.drawLine(centerX, 0, centerX, handler.getHeight());
-	}
+    }
 
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 
 }

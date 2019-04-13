@@ -8,22 +8,22 @@ public abstract class State {
 
     protected Handler handler;
 
-	private static State currentState = null;
+    private static State currentState = null;
 
     public State(Handler handler) {
-		this.handler = handler;
-	}
+        this.handler = handler;
+    }
 
     public abstract void tick();
 
-	public abstract void render(Graphics g);
+    public abstract void render(Graphics g);
 
-	public static void setState(State state) {
-		currentState = state;
-	}
+    public static void setState(State state) {
+        currentState = state;
+    }
 
-	public static State getState() {
-		return currentState;
-	}
+    public static State getState() {
+        return currentState;
+    }
 
 }

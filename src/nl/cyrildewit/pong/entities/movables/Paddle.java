@@ -14,26 +14,26 @@ public class Paddle extends MovableEntity {
 
     protected KeySet inputKeySet;
 
-	public Paddle(Handler handler, EntityType type, KeySet inputKeySet, float x, float y) {
-		super(handler, type, x, y, DEFAULT_PADDLE_WIDTH, DEFAULT_PADDLE_HEIGHT);
+    public Paddle(Handler handler, EntityType type, KeySet inputKeySet, float x, float y) {
+        super(handler, type, x, y, DEFAULT_PADDLE_WIDTH, DEFAULT_PADDLE_HEIGHT);
 
-		this.inputKeySet = inputKeySet;
+        this.inputKeySet = inputKeySet;
 
         bounds.x = 0;
-		bounds.y = 0;
-		bounds.width = width;
-		bounds.height = height;
-	}
+        bounds.y = 0;
+        bounds.width = width;
+        bounds.height = height;
+    }
 
-	@Override
-	public void update() {
+    @Override
+    public void update() {
         //
-	}
+    }
 
-	@Override
-	public void render(Graphics g) {
-		g.setColor(Color.white);
-		g.fillRect((int) x - (width / 2), (int) y - (height / 2), width, height);
+    @Override
+    public void render(Graphics g) {
+        g.setColor(Color.white);
+        g.fillRect((int) x - (width / 2), (int) y - (height / 2), width, height);
     }
 
 }

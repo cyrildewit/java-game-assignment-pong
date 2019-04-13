@@ -7,23 +7,23 @@ import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class GameState extends State {
 
-	private ClassicWorld world;
+    private ClassicWorld world;
 
-	public GameState(Handler handler) {
-		super(handler);
+    public GameState(Handler handler) {
+        super(handler);
 
-		world = new ClassicWorld(handler);
-		handler.setWorld(world);
-	}
+        world = new ClassicWorld(handler);
+        handler.setWorld(world);
+    }
 
-	@Override
-	public void tick() {
-		world.tick();
-	}
+    @Override
+    public void tick() {
+        world.tick();
+    }
 
-	@Override
-	public void render(Graphics g) {
-		world.render(g);
-	}
+    @Override
+    public void render(Graphics g) {
+        world.render(g);
+    }
 
 }

@@ -10,10 +10,10 @@ import nl.cyrildewit.pong.Handler;
 
 public class Display {
 
-	private JFrame frame;
-	private Canvas canvas;
+    private JFrame frame;
+    private Canvas canvas;
 
-	public Display(Handler handler) {
+    public Display(Handler handler) {
         canvas = new Canvas();
         Dimension s = new Dimension((int) (handler.getWidth() * handler.getScale()), (int) (handler.getHeight() * handler.getScale()));
         canvas.setPreferredSize(s);
@@ -30,14 +30,14 @@ public class Display {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-	}
+    }
 
-	public Canvas getCanvas() {
-		return canvas;
-	}
+    public Canvas getCanvas() {
+        return canvas;
+    }
 
-	public JFrame getFrame() {
-		return frame;
-	}
+    public JFrame getFrame() {
+        return frame;
+    }
 
 }

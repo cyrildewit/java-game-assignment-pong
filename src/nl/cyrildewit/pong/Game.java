@@ -116,12 +116,12 @@ public class Game implements Runnable {
 
     private void tick()
     {
-		input.update();
+        input.update();
 
         if (State.getState() != null) {
-        	State.getState().tick();
+            State.getState().tick();
         }
-	}
+    }
 
     private void render()
     {
@@ -135,16 +135,16 @@ public class Game implements Runnable {
         g.fillRect(0, 0, getDisplay().getCanvas().getWidth(), getDisplay().getCanvas().getHeight());
         // g.fillRect(0, 0, (int) (getWidth() * getScale()), (int) (getHeight() * getScale()));
 
-		if (State.getState() != null) {
-        	State.getState().render(g);
+        if (State.getState() != null) {
+            State.getState().render(g);
         }
 
         g.dispose();
-		displayBufferStrategy.show();
-	}
+        displayBufferStrategy.show();
+    }
 
-	public Input getInput() {
-		return input;
+    public Input getInput() {
+        return input;
     }
 
     public Display getDisplay()
@@ -152,7 +152,7 @@ public class Game implements Runnable {
         return display;
     }
 
-	public int getWidth() {
+    public int getWidth() {
         return width;
     }
 
