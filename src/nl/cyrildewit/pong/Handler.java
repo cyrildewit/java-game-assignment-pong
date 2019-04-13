@@ -1,6 +1,7 @@
 package nl.cyrildewit.pong;
 
-import nl.cyrildewit.pong.input.KeyManager;
+import nl.cyrildewit.pong.display.Display;
+import nl.cyrildewit.pong.input.Input;
 import nl.cyrildewit.pong.worlds.World;
 
 public class Handler {
@@ -12,8 +13,8 @@ public class Handler {
 		this.game = game;
 	}
 
-	public KeyManager getKeyManager() {
-		return game.getKeyManager();
+	public Input getInput() {
+		return game.getInput();
 	}
 
 	public int getWidth() {
@@ -22,7 +23,15 @@ public class Handler {
 
 	public int getHeight() {
 		return game.getHeight();
-	}
+    }
+
+    public float getScale() {
+        return game.getScale();
+    }
+
+    public String getTitle() {
+        return game.getTitle();
+    }
 
 	public Game getGame() {
 		return game;
@@ -38,6 +47,10 @@ public class Handler {
 
 	public void setWorld(World world) {
 		this.world = world;
+    }
+
+	public Display getDisplay() {
+		return game.getDisplay();
 	}
 
 }

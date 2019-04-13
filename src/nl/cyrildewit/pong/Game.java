@@ -1,18 +1,18 @@
 package nl.cyrildewit.pong;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import nl.cyrildewit.pong.display.Display;
-import nl.cyrildewit.pong.input.KeyManager;
+import nl.cyrildewit.pong.input.Input;
 import nl.cyrildewit.pong.state.GameState;
 import nl.cyrildewit.pong.state.State;
 
-public class Game implements Runnable
-{
+public class Game implements Runnable {
     private Thread thread;
     private Display display;
-    private KeyManager keyManager;
+    private Input input;
 
     private BufferStrategy displayBufferStrategy;
     private Graphics g;
@@ -23,22 +23,24 @@ public class Game implements Runnable
     private float scale = 1f;
     private String title;
 
-	private State gameState;
-	private Handler handler;
+    private State gameState;
+    private Handler handler;
 
-    public Game(String title, int width, int height)
-    {
-		this.title = title;
-		this.width = width;
-		this.height = height;
+    public Game(String title, int width, int height) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
     }
 
-    public synchronized void start()
-    {
-        display = new Display(title, width, height);
-        keyManager = new KeyManager();
-        display.getFrame().addKeyListener(keyManager);
+    public Game(String title) {
+        this.title = title;
+    }
+
+    public synchronized void start() {
         handler = new Handler(this);
+
+        display = new Display(handler);
+        input = new Input(handler);
 
         gameState = new GameState(handler);
         State.setState(gameState);
@@ -47,9 +49,12 @@ public class Game implements Runnable
         thread.start();
     }
 
-    public synchronized void stop()
-    {
-        //
+    public synchronized void stop() {
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run() {
@@ -111,7 +116,7 @@ public class Game implements Runnable
 
     private void tick()
     {
-		keyManager.tick();
+		input.update();
 
         if (State.getState() != null) {
         	State.getState().tick();
@@ -120,27 +125,32 @@ public class Game implements Runnable
 
     private void render()
     {
-		displayBufferStrategy = display.getCanvas().getBufferStrategy();
-
-		if (displayBufferStrategy == null) {
-			display.getCanvas().createBufferStrategy(2);
-			return;
-		}
-
-		g = displayBufferStrategy.getDrawGraphics();
-		g.clearRect(0, 0, width, height);
+        displayBufferStrategy = display.getCanvas().getBufferStrategy();
+        if (displayBufferStrategy == null) {
+            display.getCanvas().createBufferStrategy(3);
+            return;
+        }
+        g = displayBufferStrategy.getDrawGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, getDisplay().getCanvas().getWidth(), getDisplay().getCanvas().getHeight());
+        // g.fillRect(0, 0, (int) (getWidth() * getScale()), (int) (getHeight() * getScale()));
 
 		if (State.getState() != null) {
         	State.getState().render(g);
         }
 
+        g.dispose();
 		displayBufferStrategy.show();
-		g.dispose();
 	}
 
-	public KeyManager getKeyManager() {
-		return keyManager;
-	}
+	public Input getInput() {
+		return input;
+    }
+
+    public Display getDisplay()
+    {
+        return display;
+    }
 
 	public int getWidth() {
         return width;

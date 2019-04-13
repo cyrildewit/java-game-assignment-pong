@@ -34,7 +34,7 @@ public class ClassicWorld extends World {
 		playerOneKeySet = new PlayerOneKeySet(handler);
 		playerTwoKeySet = new PlayerTwoKeySet(handler);
 
-		initEntities();
+		// initEntities();
 	}
 
 	public void tick() {
@@ -42,7 +42,7 @@ public class ClassicWorld extends World {
 	}
 
 	public void render(Graphics g) {
-		buildWorld(g);
+		// buildWorld(g);
 
 		entityManager.render(g);
 	}
