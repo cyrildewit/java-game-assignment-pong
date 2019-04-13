@@ -27,13 +27,23 @@ public class Paddle extends MovableEntity {
 
     @Override
     public void update() {
-        //
+        handleKeyboardInput();
+        move();
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
         g.fillRect((int) x - (width / 2), (int) y - (height / 2), width, height);
+    }
+
+    private void handleKeyboardInput() {
+        yMove = 0;
+
+        if (inputKeySet.up())
+            yMove = -speed;
+        if (inputKeySet.down())
+            yMove = speed;
     }
 
 }
