@@ -51,14 +51,27 @@ public class ClassicWorld extends World {
         int centerY = handler.getHeight() / 2;
 
         // Left Paddle
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerOneKeySet, 30, handler.getHeight() / 2));
+        entityManager.addEntity(new Paddle(
+            handler,
+            EntityType.Paddle,
+            playerOneKeySet,
+            40,
+            centerY
+        ));
+
         // Right Paddle
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, handler.getWidth() - 30, handler.getHeight() / 2));
+        entityManager.addEntity(new Paddle(
+            handler,
+            EntityType.Paddle,
+            playerTwoKeySet,
+            handler.getWidth() - 40,
+            handler.getHeight() / 2
+        ));
 
         // Left Goal
-        entityManager.addEntity(new Goal(handler, EntityType.Goal, 0, 0, 0, handler.getHeight()));
+        entityManager.addEntity(new Goal(handler, EntityType.Goal, 0, 0, 1, handler.getHeight()));
         // Right Goal
-        entityManager.addEntity(new Goal(handler, EntityType.Goal, handler.getWidth(), 0, 5, handler.getHeight()));
+        entityManager.addEntity(new Goal(handler, EntityType.Goal, handler.getWidth(), 1, 5, handler.getHeight()));
 
         // Top Wall
         entityManager.addEntity(new Wall(handler, EntityType.Wall, 0, -1, handler.getWidth(), 1));
