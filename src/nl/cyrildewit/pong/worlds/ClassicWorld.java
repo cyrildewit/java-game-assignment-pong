@@ -1,9 +1,7 @@
 package nl.cyrildewit.pong.worlds;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
@@ -38,7 +36,7 @@ public class ClassicWorld extends World {
         initEntities();
     }
 
-    public void tick() {
+    public void update() {
         entityManager.tick();
     }
 
@@ -68,21 +66,17 @@ public class ClassicWorld extends World {
         entityManager.addEntity(new Wall(handler, EntityType.Wall, 0, handler.getHeight() + 1, handler.getWidth(), 1));
 
         // Net
-        entityManager.addEntity(new Net(handler, EntityType.Net, centerX, 0, 2, handler.getHeight()));
+        entityManager.addEntity(new Net(handler, EntityType.Net, centerX, 0, 6, handler.getHeight()));
 
         // Ball
-        entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, random.nextInt(centerY), 15));
+        entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, centerY, 15));
+        // entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, random.nextInt(centerY), 15));
     }
 
     public void buildWorld(Graphics g) {
         // Background
-        g.setColor(Color.black);
+        g.setColor(Color.BLACK);
         g.fillRect(0,  0,  handler.getWidth(), handler.getHeight());
-
-        // int centerX = handler.getWidth() / 2;
-        // int centerY = handler.getHeight() / 2;
-        // g.setColor(Color.GREEN);
-        // g.drawLine(centerX, 0, centerX, handler.getHeight());
     }
 
     public EntityManager getEntityManager() {

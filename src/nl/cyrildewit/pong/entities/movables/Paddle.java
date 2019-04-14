@@ -52,16 +52,15 @@ public class Paddle extends MovableEntity {
             yMove = speed;
     }
 
-    private void checkWallCollision()
-    {
+    private void checkWallCollision() {
         EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
 
-        for(Entity e : entityManager.getEntities()) {
+        for (Entity e : entityManager.getEntities()) {
             if (! e.getType().equals(EntityType.Wall)) {
                 continue;
             }
 
-            if(e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, yMove))) {
+            if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, yMove))) {
                 yMove = 0;
             }
         }
