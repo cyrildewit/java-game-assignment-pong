@@ -64,10 +64,10 @@ public class Ball extends MovableEntity {
             }
 
             if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-                // xMove *= -1;
-                // yMove *= -1;
+                xMove *= -1;
+                yMove *= -1;
 
-                moveRandomly();
+                // moveRandomly();
             }
         }
     }
@@ -116,5 +116,14 @@ public class Ball extends MovableEntity {
         xMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
         yMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
         //
+    }
+
+    public void setXMove(float xMove)
+    {
+        this.xMove = xMove;
+    }
+
+    public void setYMove(float yMove) {
+        this.yMove = yMove;
     }
 }

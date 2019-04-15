@@ -4,26 +4,32 @@ import java.awt.Graphics;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.worlds.ClassicWorld;
+import nl.cyrildewit.pong.worlds.TestWorld;
+import nl.cyrildewit.pong.worlds.World;
 
 public class GameState extends State {
 
-    private ClassicWorld world;
+    private World currentWorld;
 
     public GameState(Handler handler) {
         super(handler);
 
-        world = new ClassicWorld(handler);
-        handler.setWorld(world);
+        // ClassicWorld classicWorld = new ClassicWorld(handler);
+        TestWorld testWorld = new TestWorld(handler);
+
+        currentWorld = testWorld;
+
+        handler.setWorld(currentWorld);
     }
 
     @Override
     public void update() {
-        world.update();
+        currentWorld.update();
     }
 
     @Override
     public void render(Graphics g) {
-        world.render(g);
+        currentWorld.render(g);
     }
 
 }
