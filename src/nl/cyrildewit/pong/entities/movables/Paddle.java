@@ -41,14 +41,6 @@ public class Paddle extends MovableEntity {
     public void render(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect((int) x, (int) y, width, height);
-
-        // g.setColor(Color.RED);
-        // g.drawRect((int) x, (int) y, width, height);
-
-        // g.setColor(Color.PINK);
-        // g.drawRect((int) getCollisionBounds(0, 0).x, (int) getCollisionBounds(0,
-        // 0).y, getCollisionBounds(0, 0).width,
-        // getCollisionBounds(0, 0).height);
     }
 
     private void handleKeyboardInput() {

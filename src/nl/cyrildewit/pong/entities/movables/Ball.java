@@ -31,74 +31,51 @@ public class Ball extends MovableEntity {
 
         xMove = -speed / 2;
         yMove = -speed / 6;
-        // yMove = 0;
     }
 
     @Override
     public void update() {
-        checkPaddleCollision();
-        checkWallCollision();
-        checkGoalCollision();
+        checkCollisionWithEntities();
         move();
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Color.WHITE);
-        g.fillOval((int) x, (int) y, (int) height, (int) width);
-
-        // g.setColor(Color.GREEN);
-        // g.fillRect((int) getCollisionBounds(0, 0).x, (int) getCollisionBounds(0, 0).y, (int) getCollisionBounds(0, 0).height, (int) getCollisionBounds(0, 0).width);
-
-        // g.setColor(Color.PINK);
-        // g.drawRect((int) getCollisionBounds(tempXMove, tempYMove).x, (int) getCollisionBounds(tempXMove, tempYMove).y,
-        //         (int) getCollisionBounds(tempXMove, tempYMove).height, (int) getCollisionBounds(tempXMove, tempYMove).width);
+        g.fillRect((int) x, (int) y, (int) height, (int) width);
     }
 
-    private void checkPaddleCollision() {
+    private void checkCollisionWithEntities()
+    {
         EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
 
         for (Entity e : entityManager.getEntities()) {
-            if (! e.getType().equals(EntityType.Paddle)) {
-                continue;
+            if (e.getType().equals(EntityType.Paddle)) {
+                if (x - width <= e.getX() && x >= e.getX() - e.getWidth() &&
+                    y <= e.getY() + e.getHeight() && y + getHeight() >= e.getY()
+                ) {
+                    // If the ball is moving to the left side, add the ball width to x coordinate.
+                    // The ball will otherwise bug with the paddle.
+                    x = xMove < 0 ? (e.getX() + width) : (e.getX() - width);
+
+                    xMove *= -1;
+                }
             }
 
-            if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-                xMove *= -1;
-                yMove *= -1;
-
-                // moveRandomly();
-            }
-        }
-    }
-
-    private void checkWallCollision() {
-        EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
-
-        for (Entity e : entityManager.getEntities()) {
-            if (!e.getType().equals(EntityType.Wall)) {
-                continue;
+            if (e.getType().equals(EntityType.Wall)) {
+                // Since we only have walls on the top and the bottom of the canvas, the ball
+                // will only need to be reversed in yMove.
+                // It will otherwise move in the same direction back.
+                // TODO[EXTRA]: Calculate based on touch positon where the ball needs to go
+                if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
+                    yMove *= -1;
+                }
             }
 
-            // Since we only have walls on the top and the bottom of the canvas, the ball will only need to be reversed in yMove.
-            // It will otherwise move in the same direction back.
-            // TODO[EXTRA]: Calculate based on touch positon where the ball needs to go
-            if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-                yMove *= -1;
-            }
-        }
-    }
-
-    private void checkGoalCollision() {
-        EntityManager entityManager = (EntityManager) handler.getWorld().getEntityManager();
-
-        for (Entity e : entityManager.getEntities()) {
-            if (!e.getType().equals(EntityType.Goal)) {
-                continue;
-            }
-
-            if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-                System.out.println("Goal!!");
+            if (e.getType().equals(EntityType.Goal)) {
+                if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
+                    System.out.println("Goal!!");
+                }
             }
         }
     }

@@ -82,7 +82,7 @@ public class ClassicWorld extends World {
         entityManager.addEntity(new Net(handler, EntityType.Net, centerX, 0, 6, handler.getHeight()));
 
         // Ball
-        entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, centerY, 15));
+        entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, centerY, 12));
         // entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, random.nextInt(centerY), 15));
     }
 

@@ -14,10 +14,11 @@ public class GameState extends State {
     public GameState(Handler handler) {
         super(handler);
 
-        // ClassicWorld classicWorld = new ClassicWorld(handler);
+        ClassicWorld classicWorld = new ClassicWorld(handler);
         TestWorld testWorld = new TestWorld(handler);
 
-        currentWorld = testWorld;
+        // currentWorld = testWorld;
+        currentWorld = classicWorld;
 
         handler.setWorld(currentWorld);
     }
