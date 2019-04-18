@@ -8,14 +8,16 @@ import nl.cyrildewit.pong.Handler;
 public abstract class Entity {
 
     protected Handler handler;
+    protected EntityID id;
     protected EntityType type;
     protected float x, y;
     protected int width, height;
     protected boolean active = true;
     protected Rectangle bounds;
 
-    public Entity(Handler handler, EntityType type, float x, float y, int width, int height) {
+    public Entity(Handler handler, EntityID id, EntityType type, float x, float y, int width, int height) {
         this.handler = handler;
+        this.id = id;
         this.type = type;
         this.x = x;
         this.y = y;
@@ -79,6 +81,14 @@ public abstract class Entity {
 
     public void setId(EntityType type) {
         this.type = type;
+    }
+
+    public EntityID getID() {
+        return id;
+    }
+
+    public void setId(EntityID id) {
+        this.id = id;
     }
 
 }

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.entities.movables.Ball;
@@ -53,6 +54,7 @@ public class ClassicWorld extends World {
         // Left Paddle
         entityManager.addEntity(new Paddle(
             handler,
+            EntityID.PlayerOnePaddle,
             EntityType.Paddle,
             playerOneKeySet,
             40,
@@ -62,6 +64,7 @@ public class ClassicWorld extends World {
         // Right Paddle
         entityManager.addEntity(new Paddle(
             handler,
+            EntityID.PlayerTwoPaddle,
             EntityType.Paddle,
             playerTwoKeySet,
             handler.getWidth() - 40,
@@ -69,21 +72,56 @@ public class ClassicWorld extends World {
         ));
 
         // Left Goal
-        entityManager.addEntity(new Goal(handler, EntityType.Goal, 0, 0, 1, handler.getHeight()));
+        entityManager.addEntity(new Goal(
+            handler,
+            EntityID.PlayerOneGoal,
+            EntityType.Goal,
+            0, 0,
+            1, handler.getHeight()
+        ));
+
         // Right Goal
-        entityManager.addEntity(new Goal(handler, EntityType.Goal, handler.getWidth(), 1, 5, handler.getHeight()));
+        entityManager.addEntity(new Goal(
+            handler,
+            EntityID.PlayerTwoGoal,
+            EntityType.Goal,
+            handler.getWidth(), 1,
+            5, handler.getHeight()
+        ));
 
         // Top Wall
-        entityManager.addEntity(new Wall(handler, EntityType.Wall, 0, -1, handler.getWidth(), 1));
+        entityManager.addEntity(new Wall(
+            handler,
+            EntityID.TopWall,
+            EntityType.Wall,
+            0, -1,
+            handler.getWidth(), 1
+        ));
         // Top Wall
-        entityManager.addEntity(new Wall(handler, EntityType.Wall, 0, handler.getHeight() + 1, handler.getWidth(), 1));
+        entityManager.addEntity(new Wall(
+            handler,
+            EntityID.BottomWall,
+            EntityType.Wall,
+            0, handler.getHeight() + 1,
+            handler.getWidth(), 1
+        ));
 
         // Net
-        entityManager.addEntity(new Net(handler, EntityType.Net, centerX, 0, 6, handler.getHeight()));
+        entityManager.addEntity(new Net(
+            handler,
+            EntityID.Net,
+            EntityType.Net,
+            centerX, 0,
+            6, handler.getHeight())
+        );
 
         // Ball
-        entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, centerY, 12));
-        // entityManager.addEntity(new Ball(handler, EntityType.Ball, centerX, random.nextInt(centerY), 15));
+        entityManager.addEntity(new Ball(
+            handler,
+            EntityID.Ball,
+            EntityType.Ball,
+            centerX, centerY, 12
+        ));
     }
 
     public void buildWorld(Graphics g) {

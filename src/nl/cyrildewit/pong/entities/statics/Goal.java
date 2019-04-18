@@ -4,12 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import nl.cyrildewit.pong.Handler;
+import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityType;
 
 public class Goal extends StaticEntry {
 
-    public Goal(Handler handler, EntityType type, float x, float y, int width, int height) {
-        super(handler, type, x, y, width, height);
+    public Goal(Handler handler, EntityID id, EntityType type, float x, float y, int width, int height) {
+        super(handler, id, type, x, y, width, height);
 
         bounds.x = 0;
         bounds.y = 0;

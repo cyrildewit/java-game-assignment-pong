@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
+import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.input.keysets.KeySet;
@@ -16,8 +17,8 @@ public class Paddle extends MovableEntity {
 
     protected KeySet inputKeySet;
 
-    public Paddle(Handler handler, EntityType type, KeySet inputKeySet, float x, float y) {
-        super(handler, type, x, y, DEFAULT_PADDLE_WIDTH, DEFAULT_PADDLE_HEIGHT);
+    public Paddle(Handler handler, EntityID id, EntityType type, KeySet inputKeySet, float x, float y) {
+        super(handler, id, type, x, y, DEFAULT_PADDLE_WIDTH, DEFAULT_PADDLE_HEIGHT);
 
         this.inputKeySet = inputKeySet;
 

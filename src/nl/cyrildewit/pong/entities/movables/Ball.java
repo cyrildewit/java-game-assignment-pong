@@ -6,6 +6,7 @@ import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
+import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 
@@ -14,8 +15,8 @@ public class Ball extends MovableEntity {
     private int diameter;
     private Random random;
 
-    public Ball(Handler handler, EntityType type, float x, float y, int diameter) {
-        super(handler, type, x, y, diameter, diameter);
+    public Ball(Handler handler, EntityID id, EntityType type, float x, float y, int diameter) {
+        super(handler, id, type, x, y, diameter, diameter);
 
         random = new Random();
 
@@ -74,7 +75,7 @@ public class Ball extends MovableEntity {
 
             if (e.getType().equals(EntityType.Goal)) {
                 if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-                    System.out.println("Goal!!");
+                    System.out.println("Goal!!" + e.getID());
                 }
             }
         }
