@@ -24,8 +24,8 @@ public class Paddle extends MovableEntity {
         this.x = x - (width / 2);
         this.y = y - (height / 2);
 
-        // bounds.x = 0;
-        // bounds.y = (height / 2);
+        bounds.x = 0;
+        bounds.y = 0;
         bounds.width = width;
         bounds.height = height;
     }
