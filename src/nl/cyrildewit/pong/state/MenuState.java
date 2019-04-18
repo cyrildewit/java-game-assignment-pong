@@ -11,7 +11,7 @@ public class MenuState extends State {
     }
 
     @Override
-    public void tick() {
+    public void update() {
         //
     }
 

@@ -29,7 +29,9 @@ public class Display {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setFocusable(false);
 
+        canvas.requestFocus();
     }
 
     public Canvas getCanvas() {

@@ -14,7 +14,7 @@ public class Game implements Runnable {
     private Display display;
     private Input input;
 
-    private BufferStrategy displayBufferStrategy;
+    private BufferStrategy bufferStrategy;
     private Graphics g;
 
     private boolean running = false;
@@ -84,7 +84,7 @@ public class Game implements Runnable {
                 unprocessedTime -= UPDATE_CAP;
                 render = true;
 
-                tick();
+                update();
 
                 if (frameTime >= 1.0) {
                     frameTime = 0;
@@ -114,33 +114,36 @@ public class Game implements Runnable {
         //
     }
 
-    private void tick()
+    private void update()
     {
         input.update();
 
         if (State.getState() != null) {
-            State.getState().tick();
+            State.getState().update();
         }
     }
 
     private void render()
     {
-        displayBufferStrategy = display.getCanvas().getBufferStrategy();
-        if (displayBufferStrategy == null) {
+        bufferStrategy = display.getCanvas().getBufferStrategy();
+
+        if (bufferStrategy == null) {
             display.getCanvas().createBufferStrategy(3);
             return;
         }
-        g = displayBufferStrategy.getDrawGraphics();
+        g = bufferStrategy.getDrawGraphics();
+        ////////////////////////////////////////////////////////////////////////
+
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getDisplay().getCanvas().getWidth(), getDisplay().getCanvas().getHeight());
-        // g.fillRect(0, 0, (int) (getWidth() * getScale()), (int) (getHeight() * getScale()));
+        g.fillRect(0, 0, (int) (getWidth() * getScale()), (int) (getHeight() * getScale()));
 
         if (State.getState() != null) {
             State.getState().render(g);
         }
 
+        ////////////////////////////////////////////////////////////////////////
         g.dispose();
-        displayBufferStrategy.show();
+        bufferStrategy.show();
     }
 
     public Input getInput() {

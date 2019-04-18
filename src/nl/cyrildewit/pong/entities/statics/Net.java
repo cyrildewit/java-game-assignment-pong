@@ -28,13 +28,14 @@ public class Net extends StaticEntry {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        float dash[] = { 16.0f };
-        BasicStroke bs = new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, dash, 0);
+        float dash[] = { 16 };
+        BasicStroke bs = new BasicStroke((float) width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1.0f, dash, 0);
 
-        g2d.setColor(Color.white);
+        g2d.setColor(Color.WHITE);
         g2d.setStroke(bs);
-        g2d.drawLine((int) x, (int) y, (int) x + width, (int) y + height);
-        // g2d.drawLine(handler.getWidth() / 2, 0, handler.getWidth() / 2, handler.getHeight());
+        g2d.drawLine((int) x, (int) y, (int) x, (int) (y + height));
+
+        // Reset stroke;
         g2d.setStroke(new BasicStroke());
     }
 
