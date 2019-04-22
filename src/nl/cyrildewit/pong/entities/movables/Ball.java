@@ -9,6 +9,7 @@ import nl.cyrildewit.pong.entities.Entity;
 import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
+import nl.cyrildewit.pong.entities.statics.Goal;
 
 public class Ball extends MovableEntity {
 
@@ -67,8 +68,6 @@ public class Ball extends MovableEntity {
 
                     lastHittedBy = e.getID();
                 }
-
-                System.out.println("Last stroked by " + lastHittedBy);
             }
 
             if (e.getType().equals(EntityType.Wall)) {
@@ -88,7 +87,10 @@ public class Ball extends MovableEntity {
                     xMove = 0;
                     yMove = 0;
 
-                    // handler.getGame();
+                    if (e instanceof Goal) {
+                        Goal goal = (Goal) e;
+                        goal.getPlayer().addPoint();
+                    }
                 }
             }
         }

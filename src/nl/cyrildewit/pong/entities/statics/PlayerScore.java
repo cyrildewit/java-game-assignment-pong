@@ -8,12 +8,14 @@ import java.awt.Graphics2D;
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityType;
+import nl.cyrildewit.pong.entities.movables.Player;
 import nl.cyrildewit.pong.gfx.FontAssets;
 
 public class PlayerScore extends StaticEntry {
 
     protected Color textColor;
     protected Font bitFont;
+    protected Player player;
 
     public PlayerScore(Handler handler, EntityID id, EntityType type, float x, float y) {
         super(handler, id, type, x, y, 0, 0);
@@ -41,7 +43,17 @@ public class PlayerScore extends StaticEntry {
 
         g.setFont(bitFont);
 
-        g2d.drawString("4", x, y);
+        String score = player != null ? Integer.toString(player.getScore()) : "0";
+
+        g2d.drawString(score, x, y);
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
 }

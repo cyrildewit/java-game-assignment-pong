@@ -9,7 +9,7 @@ import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.entities.movables.Ball;
-import nl.cyrildewit.pong.entities.movables.Paddle;
+import nl.cyrildewit.pong.entities.movables.Player;
 import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.entities.statics.Net;
 import nl.cyrildewit.pong.entities.statics.PlayerScore;
@@ -40,7 +40,6 @@ public class ClassicWorld extends World {
 
     public void update() {
         entityManager.tick();
-
     }
 
     public void render(Graphics g) {
@@ -53,43 +52,50 @@ public class ClassicWorld extends World {
         int centerX = handler.getWidth() / 2;
         int centerY = handler.getHeight() / 2;
 
-        // Left Paddle
-        entityManager.addEntity(new Paddle(
+        // Left Goal
+        Goal leftGoal = new Goal(
+            handler,
+            EntityID.PlayerOneGoal,
+            EntityType.Goal,
+            0, 0,
+            1, handler.getHeight()
+        );
+        entityManager.addEntity(leftGoal);
+
+        // Right Goal
+        Goal rightGoal = new Goal(
+            handler,
+            EntityID.PlayerTwoGoal,
+            EntityType.Goal,
+            handler.getWidth(), 1,
+            5, handler.getHeight()
+        );
+        entityManager.addEntity(rightGoal);
+
+        // Left Player
+        Player leftPlayer = new Player(
             handler,
             EntityID.PlayerOnePaddle,
             EntityType.Paddle,
             playerOneKeySet,
             40,
             centerY
-        ));
+        );
+        leftPlayer.setGoal(leftGoal);
+        entityManager.addEntity(leftPlayer);
+        leftGoal.setPlayer(leftPlayer);
 
         // Right Paddle
-        entityManager.addEntity(new Paddle(
+        Player rightPlayer = new Player(
             handler,
             EntityID.PlayerTwoPaddle,
             EntityType.Paddle,
             playerTwoKeySet,
             handler.getWidth() - 40,
             handler.getHeight() / 2
-        ));
-
-        // Left Goal
-        entityManager.addEntity(new Goal(
-            handler,
-            EntityID.PlayerOneGoal,
-            EntityType.Goal,
-            0, 0,
-            1, handler.getHeight()
-        ));
-
-        // Right Goal
-        entityManager.addEntity(new Goal(
-            handler,
-            EntityID.PlayerTwoGoal,
-            EntityType.Goal,
-            handler.getWidth(), 1,
-            5, handler.getHeight()
-        ));
+        );
+        entityManager.addEntity(rightPlayer);
+        rightGoal.setPlayer(rightPlayer);
 
         // Top Wall
         entityManager.addEntity(new Wall(
@@ -127,20 +133,24 @@ public class ClassicWorld extends World {
         ));
 
         // Left Player Score
-        entityManager.addEntity(new PlayerScore(
+        PlayerScore leftPlayerScore = new PlayerScore(
             handler,
             EntityID.PlayerOneScore,
             EntityType.Score,
             centerX / 2, 100
-        ));
+        );
+        leftPlayerScore.setPlayer(leftPlayer);
+        entityManager.addEntity(leftPlayerScore);
 
         // Left Player Score
-        entityManager.addEntity(new PlayerScore(
+        PlayerScore rightPlayerScore = new PlayerScore(
             handler,
             EntityID.PlayerTwoScore,
             EntityType.Score,
             centerX + (centerX / 2), 100
-        ));
+        );
+        rightPlayerScore.setPlayer(rightPlayer);
+        entityManager.addEntity(rightPlayerScore);
     }
 
     public void buildWorld(Graphics g) {
