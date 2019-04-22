@@ -16,6 +16,7 @@ public class Ball extends MovableEntity {
 
     private int diameter;
     private Color backgroundColor;
+    private EntityID lastHittedBy;
 
     public Ball(Handler handler, EntityID id, EntityType type, float x, float y, int diameter) {
         super(handler, id, type, x, y, diameter, diameter);
@@ -63,7 +64,11 @@ public class Ball extends MovableEntity {
                     x = xMove < 0 ? (e.getX() + width) : (e.getX() - width);
 
                     xMove *= -1;
+
+                    lastHittedBy = e.getID();
                 }
+
+                System.out.println("Last stroked by " + lastHittedBy);
             }
 
             if (e.getType().equals(EntityType.Wall)) {
@@ -83,7 +88,7 @@ public class Ball extends MovableEntity {
                     xMove = 0;
                     yMove = 0;
 
-                    handler.getGame();
+                    // handler.getGame();
                 }
             }
         }
