@@ -9,6 +9,8 @@ public enum EntityID {
     BottomWall(),
     PlayerOneGoal(),
     PlayerTwoGoal(),
+    PlayerOneScore(),
+    PlayerTwoScore(),
     Net();
 
 }

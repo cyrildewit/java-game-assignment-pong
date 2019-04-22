@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import nl.cyrildewit.pong.display.Display;
+import nl.cyrildewit.pong.gfx.FontAssets;
 import nl.cyrildewit.pong.input.Input;
 import nl.cyrildewit.pong.state.GameState;
 import nl.cyrildewit.pong.state.State;
@@ -41,6 +42,8 @@ public class Game implements Runnable {
 
         display = new Display(handler);
         input = new Input(handler);
+
+        FontAssets.initialize();
 
         gameState = new GameState(handler);
         State.setState(gameState);

@@ -12,6 +12,7 @@ import nl.cyrildewit.pong.entities.movables.Ball;
 import nl.cyrildewit.pong.entities.movables.Paddle;
 import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.entities.statics.Net;
+import nl.cyrildewit.pong.entities.statics.PlayerScore;
 import nl.cyrildewit.pong.entities.statics.Wall;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerOneKeySet;
@@ -39,6 +40,7 @@ public class ClassicWorld extends World {
 
     public void update() {
         entityManager.tick();
+
     }
 
     public void render(Graphics g) {
@@ -47,7 +49,7 @@ public class ClassicWorld extends World {
         entityManager.render(g);
     }
 
-    public void initEntities() {
+    private void initEntities() {
         int centerX = handler.getWidth() / 2;
         int centerY = handler.getHeight() / 2;
 
@@ -97,6 +99,7 @@ public class ClassicWorld extends World {
             0, -1,
             handler.getWidth(), 1
         ));
+
         // Top Wall
         entityManager.addEntity(new Wall(
             handler,
@@ -121,6 +124,22 @@ public class ClassicWorld extends World {
             EntityID.Ball,
             EntityType.Ball,
             centerX, centerY, 12
+        ));
+
+        // Left Player Score
+        entityManager.addEntity(new PlayerScore(
+            handler,
+            EntityID.PlayerOneScore,
+            EntityType.Score,
+            centerX / 2, 100
+        ));
+
+        // Left Player Score
+        entityManager.addEntity(new PlayerScore(
+            handler,
+            EntityID.PlayerTwoScore,
+            EntityType.Score,
+            centerX + (centerX / 2), 100
         ));
     }
 

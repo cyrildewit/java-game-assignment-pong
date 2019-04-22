@@ -6,6 +6,7 @@ public enum EntityType {
     Ball(),
     Wall(),
     Goal(),
+    Score(),
     Net();
 
 }

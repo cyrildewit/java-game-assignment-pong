@@ -12,8 +12,10 @@ import nl.cyrildewit.pong.entities.EntityType;
 
 public class Ball extends MovableEntity {
 
-    private int diameter;
     private Random random;
+
+    private int diameter;
+    private Color backgroundColor;
 
     public Ball(Handler handler, EntityID id, EntityType type, float x, float y, int diameter) {
         super(handler, id, type, x, y, diameter, diameter);
@@ -23,6 +25,7 @@ public class Ball extends MovableEntity {
         this.x = x - (diameter / 2);
         this.y = y - (diameter / 2);
         this.diameter = diameter;
+        this.backgroundColor = Color.WHITE;
         this.speed = 10;
 
         bounds.x = 0;
@@ -42,7 +45,7 @@ public class Ball extends MovableEntity {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.WHITE);
+        g.setColor(backgroundColor);
         g.fillRect((int) x, (int) y, (int) height, (int) width);
     }
 
@@ -76,6 +79,11 @@ public class Ball extends MovableEntity {
             if (e.getType().equals(EntityType.Goal)) {
                 if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
                     System.out.println("Goal!!" + e.getID());
+                    active = false;
+                    xMove = 0;
+                    yMove = 0;
+
+                    handler.getGame();
                 }
             }
         }
@@ -103,5 +111,9 @@ public class Ball extends MovableEntity {
 
     public void setYMove(float yMove) {
         this.yMove = yMove;
+    }
+
+    public void setBackgroundColor(Color color) {
+        this.backgroundColor = color;
     }
 }

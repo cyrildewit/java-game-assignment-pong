@@ -48,36 +48,36 @@ public class TestWorld extends World {
     }
 
     public void initEntities() {
-        // Testcase #1
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 100));
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 400, 100));
-        Ball ballOne = new Ball(handler, EntityType.Ball, 300, 100, 15);
-        ballOne.setXMove(-5);
-        ballOne.setYMove(0);
-        entityManager.addEntity(ballOne);
+        // // Testcase #1
+        // entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 100));
+        // entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 400, 100));
+        // Ball ballOne = new Ball(handler, EntityType.Ball, 300, 100, 15);
+        // ballOne.setXMove(-5);
+        // ballOne.setYMove(0);
+        // entityManager.addEntity(ballOne);
 
-        // Testcase #2
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 300));
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 600));
-        Ball ballTwo = new Ball(handler, EntityType.Ball, 100, 500, 15);
-        ballTwo.setXMove(0);
-        ballTwo.setYMove(-5);
-        entityManager.addEntity(ballTwo);
+        // // Testcase #2
+        // entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 300));
+        // entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 600));
+        // Ball ballTwo = new Ball(handler, EntityType.Ball, 100, 500, 15);
+        // ballTwo.setXMove(0);
+        // ballTwo.setYMove(-5);
+        // entityManager.addEntity(ballTwo);
 
-        // Testcase #3
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 300, 400));
-        Ball ballThree = new Ball(handler, EntityType.Ball, 200, 350, 15);
-        ballThree.setXMove(5);
-        ballThree.setYMove(2);
-        entityManager.addEntity(ballThree);
+        // // Testcase #3
+        // entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 300, 400));
+        // Ball ballThree = new Ball(handler, EntityType.Ball, 200, 350, 15);
+        // ballThree.setXMove(5);
+        // ballThree.setYMove(2);
+        // entityManager.addEntity(ballThree);
 
-        // Testcase #4
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 150));
-        entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 600, 600));
-        Ball ballFour = new Ball(handler, EntityType.Ball, 400, 400, 15);
-        ballFour.setXMove(5);
-        ballFour.setYMove(4);
-        entityManager.addEntity(ballFour);
+        // // Testcase #4
+        // entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 100, 150));
+        // entityManager.addEntity(new Paddle(handler, EntityType.Paddle, playerTwoKeySet, 600, 600));
+        // Ball ballFour = new Ball(handler, EntityType.Ball, 400, 400, 15);
+        // ballFour.setXMove(5);
+        // ballFour.setYMove(4);
+        // entityManager.addEntity(ballFour);
     }
 
     public void buildWorld(Graphics g) {
