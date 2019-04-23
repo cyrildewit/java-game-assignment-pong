@@ -11,6 +11,7 @@ import nl.cyrildewit.pong.entities.movables.Player;
 public class Goal extends StaticEntry {
 
     private Player player;
+    private Player opponent;
 
     public Goal(Handler handler, EntityID id, EntityType type, float x, float y, int width, int height) {
         super(handler, id, type, x, y, width, height);
@@ -38,6 +39,14 @@ public class Goal extends StaticEntry {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public Player getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
     }
 
 }

@@ -17,7 +17,7 @@ public class Ball extends MovableEntity {
 
     private int diameter;
     private Color backgroundColor;
-    private EntityID lastHittedBy;
+    private Player lastHittedBy;
 
     public Ball(Handler handler, EntityID id, EntityType type, float x, float y, int diameter) {
         super(handler, id, type, x, y, diameter, diameter);
@@ -35,8 +35,9 @@ public class Ball extends MovableEntity {
         bounds.width = width;
         bounds.height = height;
 
-        xMove = -speed / 2;
-        yMove = -speed / 6;
+        // xMove = -speed / 2;
+        // yMove = -speed / 6;
+        moveRandomly();
     }
 
     @Override
@@ -66,7 +67,9 @@ public class Ball extends MovableEntity {
 
                     xMove *= -1;
 
-                    lastHittedBy = e.getID();
+                    if (e instanceof Player) {
+                        lastHittedBy = (Player) e;
+                    }
                 }
             }
 
@@ -89,26 +92,35 @@ public class Ball extends MovableEntity {
 
                     if (e instanceof Goal) {
                         Goal goal = (Goal) e;
-                        goal.getPlayer().addPoint();
+                        goal.getOpponent().addPoint();
                     }
+
+                    respawn();
+                    moveRandomly();
+                    active = true;
                 }
             }
         }
     }
 
+    public void respawn() {
+        x = (handler.getWidth() / 2) - width / 2;
+        y = height + random.nextInt(handler.getHeight() - height);
+    }
+
     public void moveRandomly() {
-        int directionX = 0;
-        int directionY = 0;
+        // true => right, false => left
+        boolean directionX = false;
 
-        float minSpeed = speed / 2;
-        float maxSpeed = speed * 2;
+        float minSpeed = 4f;
+        float maxSpeed = 7f;
 
-        if (xMove > 0) directionX = 1;
-        if (yMove > 0) directionY = 1;
+        directionX = xMove > 0 ? true : false;
 
         xMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
         yMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
-        //
+
+        System.out.println("Speed: " + speed);
     }
 
     public void setXMove(float xMove)

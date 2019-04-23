@@ -52,7 +52,6 @@ public class ClassicWorld extends World {
         int centerX = handler.getWidth() / 2;
         int centerY = handler.getHeight() / 2;
 
-        // Left Goal
         Goal leftGoal = new Goal(
             handler,
             EntityID.PlayerOneGoal,
@@ -60,9 +59,7 @@ public class ClassicWorld extends World {
             0, 0,
             1, handler.getHeight()
         );
-        entityManager.addEntity(leftGoal);
 
-        // Right Goal
         Goal rightGoal = new Goal(
             handler,
             EntityID.PlayerTwoGoal,
@@ -70,9 +67,7 @@ public class ClassicWorld extends World {
             handler.getWidth(), 1,
             5, handler.getHeight()
         );
-        entityManager.addEntity(rightGoal);
 
-        // Left Player
         Player leftPlayer = new Player(
             handler,
             EntityID.PlayerOnePaddle,
@@ -81,11 +76,7 @@ public class ClassicWorld extends World {
             40,
             centerY
         );
-        leftPlayer.setGoal(leftGoal);
-        entityManager.addEntity(leftPlayer);
-        leftGoal.setPlayer(leftPlayer);
 
-        // Right Paddle
         Player rightPlayer = new Player(
             handler,
             EntityID.PlayerTwoPaddle,
@@ -94,63 +85,73 @@ public class ClassicWorld extends World {
             handler.getWidth() - 40,
             handler.getHeight() / 2
         );
-        entityManager.addEntity(rightPlayer);
-        rightGoal.setPlayer(rightPlayer);
 
-        // Top Wall
-        entityManager.addEntity(new Wall(
+        Wall topWall = new Wall(
             handler,
             EntityID.TopWall,
             EntityType.Wall,
             0, -1,
             handler.getWidth(), 1
-        ));
+        );
 
-        // Top Wall
-        entityManager.addEntity(new Wall(
+        Wall bottomWall = new Wall(
             handler,
             EntityID.BottomWall,
             EntityType.Wall,
             0, handler.getHeight() + 1,
             handler.getWidth(), 1
-        ));
+        );
 
-        // Net
-        entityManager.addEntity(new Net(
+        Net net = new Net(
             handler,
             EntityID.Net,
             EntityType.Net,
             centerX, 0,
-            6, handler.getHeight())
+            6, handler.getHeight()
         );
 
-        // Ball
-        entityManager.addEntity(new Ball(
+        Ball ball = new Ball(
             handler,
             EntityID.Ball,
             EntityType.Ball,
             centerX, centerY, 12
-        ));
+        );
 
-        // Left Player Score
         PlayerScore leftPlayerScore = new PlayerScore(
             handler,
             EntityID.PlayerOneScore,
             EntityType.Score,
             centerX / 2, 100
         );
-        leftPlayerScore.setPlayer(leftPlayer);
-        entityManager.addEntity(leftPlayerScore);
 
-        // Left Player Score
         PlayerScore rightPlayerScore = new PlayerScore(
             handler,
             EntityID.PlayerTwoScore,
             EntityType.Score,
             centerX + (centerX / 2), 100
         );
+
+        leftGoal.setPlayer(leftPlayer);
+        leftGoal.setOpponent(rightPlayer);
+        rightGoal.setPlayer(rightPlayer);
+        rightGoal.setOpponent(leftPlayer);
+
+        leftPlayer.setGoal(leftGoal);
+        rightPlayer.setGoal(rightGoal);
+
+        leftPlayerScore.setPlayer(leftPlayer);
         rightPlayerScore.setPlayer(rightPlayer);
+
+        entityManager.addEntity(net);
+        entityManager.addEntity(ball);
+        entityManager.addEntity(rightPlayer);
+        entityManager.addEntity(leftGoal);
+        entityManager.addEntity(rightGoal);
+        entityManager.addEntity(leftPlayer);
+        entityManager.addEntity(leftPlayerScore);
         entityManager.addEntity(rightPlayerScore);
+        entityManager.addEntity(topWall);
+        entityManager.addEntity(bottomWall);
     }
 
     public void buildWorld(Graphics g) {
