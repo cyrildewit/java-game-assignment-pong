@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.worlds.ClassicWorld;
-import nl.cyrildewit.pong.worlds.TestWorld;
 import nl.cyrildewit.pong.worlds.World;
 
 public class GameState extends State {
@@ -15,7 +14,6 @@ public class GameState extends State {
         super(handler);
 
         ClassicWorld classicWorld = new ClassicWorld(handler);
-        TestWorld testWorld = new TestWorld(handler);
 
         // currentWorld = testWorld;
         currentWorld = classicWorld;
