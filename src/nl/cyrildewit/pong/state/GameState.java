@@ -15,7 +15,6 @@ public class GameState extends State {
 
         ClassicWorld classicWorld = new ClassicWorld(handler);
 
-        // currentWorld = testWorld;
         currentWorld = classicWorld;
 
         handler.setWorld(currentWorld);
