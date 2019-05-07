@@ -11,6 +11,8 @@ public enum EntityID {
     PlayerTwoGoal(),
     PlayerOneScore(),
     PlayerTwoScore(),
-    Net();
+    Net(),
+    YouWon,
+    YouLost;
 
 }

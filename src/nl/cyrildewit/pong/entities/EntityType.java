@@ -7,6 +7,8 @@ public enum EntityType {
     Wall(),
     Goal(),
     Score(),
-    Net();
+    Net(),
+    YouWon,
+    YouLost;
 
 }

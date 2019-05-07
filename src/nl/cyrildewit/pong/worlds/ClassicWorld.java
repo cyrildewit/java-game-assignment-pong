@@ -14,17 +14,30 @@ import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.entities.statics.Net;
 import nl.cyrildewit.pong.entities.statics.PlayerScore;
 import nl.cyrildewit.pong.entities.statics.Wall;
+import nl.cyrildewit.pong.entities.statics.YouWon;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerOneKeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerTwoKeySet;
 
 public class ClassicWorld extends World {
 
-    // Entities
-    private EntityManager entityManager;
+    private static final String EntitiyID = null;
+	private EntityManager entityManager;
     private Random random;
-
     private KeySet playerOneKeySet, playerTwoKeySet;
+
+    private int centerX = handler.getWidth() / 2;
+    private int centerY = handler.getHeight() / 2;
+
+    private final int MAXIMUM_SCORE = 1;
+    private final int START_LEVEL = 1;
+
+    private boolean isPlaying = true, isPaused = false;
+    private int currentLevel = 1;
+    private EntityID lastWinner = null, lastLoser = null;
+
+    Player leftPlayer, rightPlayer;
+    YouWon youWon;
 
     public ClassicWorld(Handler handler) {
         super(handler);
@@ -40,6 +53,31 @@ public class ClassicWorld extends World {
 
     public void update() {
         entityManager.tick();
+
+        if (leftPlayer != null && rightPlayer != null) {
+            if (leftPlayer.getScore() >= MAXIMUM_SCORE || rightPlayer.getScore() >= MAXIMUM_SCORE) {
+                isPlaying = false;
+
+                if (leftPlayer.getScore() > rightPlayer.getScore()) {
+                    lastWinner = leftPlayer.getID();
+                    lastLoser = rightPlayer.getID();
+                } else {
+                    lastWinner = leftPlayer.getID();
+                    lastLoser = rightPlayer.getID();
+                }
+
+            }
+        }
+
+        if (! isPlaying && ! isPaused && lastWinner != null && lastLoser != null) {
+            if (lastWinner == EntityID.PlayerOnePaddle) {
+                youWon.setPosition(centerX / 2, centerY);
+            }
+
+            if (lastWinner == EntityID.PlayerTwoPaddle) {
+                youWon.setPosition(centerX + (centerX / 2), centerY);
+            }
+        }
     }
 
     public void render(Graphics g) {
@@ -49,8 +87,8 @@ public class ClassicWorld extends World {
     }
 
     private void initEntities() {
-        int centerX = handler.getWidth() / 2;
-        int centerY = handler.getHeight() / 2;
+        // int centerX = handler.getWidth() / 2;
+        // int centerY = handler.getHeight() / 2;
 
         Goal leftGoal = new Goal(
             handler,
@@ -68,7 +106,7 @@ public class ClassicWorld extends World {
             5, handler.getHeight()
         );
 
-        Player leftPlayer = new Player(
+        leftPlayer = new Player(
             handler,
             EntityID.PlayerOnePaddle,
             EntityType.Paddle,
@@ -77,7 +115,7 @@ public class ClassicWorld extends World {
             centerY
         );
 
-        Player rightPlayer = new Player(
+        rightPlayer = new Player(
             handler,
             EntityID.PlayerTwoPaddle,
             EntityType.Paddle,
@@ -131,6 +169,12 @@ public class ClassicWorld extends World {
             centerX + (centerX / 2), 100
         );
 
+        youWon = new YouWon(
+            handler,
+            EntityID.YouWon,
+            EntityType.YouWon
+        );
+
         leftGoal.setPlayer(leftPlayer);
         leftGoal.setOpponent(rightPlayer);
         rightGoal.setPlayer(rightPlayer);
@@ -162,6 +206,18 @@ public class ClassicWorld extends World {
 
     public EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    public void incrementLevel() {
+        currentLevel++;
+    }
+
+    public void resetLevel() {
+        currentLevel = START_LEVEL;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
 }

@@ -10,6 +10,7 @@ import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.entities.statics.Goal;
+import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class Ball extends MovableEntity {
 
@@ -42,6 +43,12 @@ public class Ball extends MovableEntity {
 
     @Override
     public void update() {
+        ClassicWorld world = (ClassicWorld) handler.getWorld();
+
+        if(! world.isPlaying()) {
+            active = false;
+        }
+
         checkCollisionWithEntities();
         move();
     }
