@@ -45,9 +45,9 @@ public class Ball extends MovableEntity {
     public void update() {
         ClassicWorld world = (ClassicWorld) handler.getWorld();
 
-        if(! world.isPlaying()) {
-            active = false;
-        }
+        // if(! world.isPlaying()) {
+        //     active = false;
+        // }
 
         checkCollisionWithEntities();
         move();

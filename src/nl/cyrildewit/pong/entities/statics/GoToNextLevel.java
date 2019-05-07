@@ -10,13 +10,12 @@ import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.gfx.FontAssets;
 
-public class YouWon extends StaticEntry {
+public class GoToNextLevel extends StaticEntry {
 
     protected Color textColor;
     protected Font bitFont;
-    protected int stringWidth = 0;
 
-    public YouWon(Handler handler, EntityID id, EntityType type) {
+    public GoToNextLevel(Handler handler, EntityID id, EntityType type) {
         super(handler, id, type, 0, 0, 0, 0);
 
         textColor = Color.WHITE;
@@ -42,12 +41,7 @@ public class YouWon extends StaticEntry {
 
         g.setFont(bitFont);
 
-        g2d.drawString("You Won!", x, y);
-        stringWidth = g.getFontMetrics().stringWidth("You Won!");
-    }
-
-    public int getStringWidth() {
-        return stringWidth;
+        g2d.drawString("Press space to continue playing", x, y);
     }
 
 }

@@ -2,6 +2,7 @@ package nl.cyrildewit.pong.worlds;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
@@ -10,10 +11,12 @@ import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.entities.movables.Ball;
 import nl.cyrildewit.pong.entities.movables.Player;
+import nl.cyrildewit.pong.entities.statics.GoToNextLevel;
 import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.entities.statics.Net;
 import nl.cyrildewit.pong.entities.statics.PlayerScore;
 import nl.cyrildewit.pong.entities.statics.Wall;
+import nl.cyrildewit.pong.entities.statics.YouLost;
 import nl.cyrildewit.pong.entities.statics.YouWon;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerOneKeySet;
@@ -21,7 +24,6 @@ import nl.cyrildewit.pong.input.keysets.PlayerTwoKeySet;
 
 public class ClassicWorld extends World {
 
-    private static final String EntitiyID = null;
 	private EntityManager entityManager;
     private Random random;
     private KeySet playerOneKeySet, playerTwoKeySet;
@@ -37,7 +39,10 @@ public class ClassicWorld extends World {
     private EntityID lastWinner = null, lastLoser = null;
 
     Player leftPlayer, rightPlayer;
+    Ball ball;
     YouWon youWon;
+    YouLost youLost;
+    GoToNextLevel nextLevel;
 
     public ClassicWorld(Handler handler) {
         super(handler);
@@ -54,6 +59,9 @@ public class ClassicWorld extends World {
     public void update() {
         entityManager.tick();
 
+        youLost.setPosition((centerX / 2) - youLost.getStringWidth() / 2, centerY);
+        youWon.setActive(true);
+
         if (leftPlayer != null && rightPlayer != null) {
             if (leftPlayer.getScore() >= MAXIMUM_SCORE || rightPlayer.getScore() >= MAXIMUM_SCORE) {
                 isPlaying = false;
@@ -62,21 +70,45 @@ public class ClassicWorld extends World {
                     lastWinner = leftPlayer.getID();
                     lastLoser = rightPlayer.getID();
                 } else {
-                    lastWinner = leftPlayer.getID();
-                    lastLoser = rightPlayer.getID();
+                    lastWinner = rightPlayer.getID();
+                    lastLoser = leftPlayer.getID();
                 }
 
+                ball.setActive(false);
             }
         }
 
         if (! isPlaying && ! isPaused && lastWinner != null && lastLoser != null) {
             if (lastWinner == EntityID.PlayerOnePaddle) {
-                youWon.setPosition(centerX / 2, centerY);
+                youWon.setPosition((centerX / 2) - youWon.getStringWidth() / 2, centerY);
+                youWon.setActive(true);
             }
 
             if (lastWinner == EntityID.PlayerTwoPaddle) {
-                youWon.setPosition(centerX + (centerX / 2), centerY);
+                youWon.setPosition(centerX + (centerX / 2) - youWon.getStringWidth() / 2, centerY);
+                youWon.setActive(true);
             }
+
+            if (lastLoser == EntityID.PlayerOnePaddle) {
+                youLost.setPosition((centerX / 2) - youLost.getStringWidth() / 2, centerY);
+                youLost.setActive(true);
+            }
+
+            if (lastLoser == EntityID.PlayerTwoPaddle) {
+                youLost.setPosition(centerX + (centerX / 2) - youLost.getStringWidth() / 2, centerY);
+                youLost.setActive(true);
+            }
+        }
+
+        if (! isPlaying && handler.getInput().isKey(KeyEvent.VK_SPACE)) {
+            isPlaying = true;
+            leftPlayer.setScore(0);
+            rightPlayer.setScore(0);
+            youWon.setActive(false);
+            youLost.setActive(false);
+            ball.setActive(true);
+            ball.respawn();
+            incrementLevel();
         }
     }
 
@@ -87,9 +119,6 @@ public class ClassicWorld extends World {
     }
 
     private void initEntities() {
-        // int centerX = handler.getWidth() / 2;
-        // int centerY = handler.getHeight() / 2;
-
         Goal leftGoal = new Goal(
             handler,
             EntityID.PlayerOneGoal,
@@ -148,7 +177,7 @@ public class ClassicWorld extends World {
             6, handler.getHeight()
         );
 
-        Ball ball = new Ball(
+        ball = new Ball(
             handler,
             EntityID.Ball,
             EntityType.Ball,
@@ -175,6 +204,12 @@ public class ClassicWorld extends World {
             EntityType.YouWon
         );
 
+        youLost = new YouLost(
+            handler,
+            EntityID.YouLost,
+            EntityType.YouLost
+        );
+
         leftGoal.setPlayer(leftPlayer);
         leftGoal.setOpponent(rightPlayer);
         rightGoal.setPlayer(rightPlayer);
@@ -196,6 +231,7 @@ public class ClassicWorld extends World {
         entityManager.addEntity(rightPlayerScore);
         entityManager.addEntity(topWall);
         entityManager.addEntity(bottomWall);
+        entityManager.addEntity(youWon);
     }
 
     public void buildWorld(Graphics g) {
