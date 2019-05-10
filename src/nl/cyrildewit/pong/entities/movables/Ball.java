@@ -35,8 +35,6 @@ public class Ball extends MovableEntity {
         bounds.y = 0;
         bounds.width = width;
         bounds.height = height;
-
-        moveRandomly();
     }
 
     @Override
@@ -88,12 +86,16 @@ public class Ball extends MovableEntity {
                     xMove = 0;
                     yMove = 0;
 
+                    boolean direction = false;
+
                     if (e instanceof Goal) {
                         Goal goal = (Goal) e;
                         goal.getOpponent().addPoint();
+                        direction = goal.getPlayer().getID().equals(EntityID.PlayerOnePaddle);
                     }
 
                     respawn();
+                    moveRandomly(direction ? "left" : "right");
                     active = true;
                 }
             }
@@ -106,19 +108,23 @@ public class Ball extends MovableEntity {
     }
 
     public void moveRandomly() {
-        // true => right, false => left
-        boolean directionX = false;
+        moveRandomly(random.nextBoolean() ? "left" : "right");
+    }
+
+    public void moveRandomly(String direction) {
+        // // true => right, false => left
+        // boolean directionX = false;
 
         float minSpeed = 4f;
         float maxSpeed = 7f;
 
-        directionX = xMove > 0 ? true : false;
+        // directionX = xMove > 0 ? true : false;
 
         xMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
         yMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
 
         // Move bll to left needed
-        if (! directionX) xMove *= -1;
+        if (direction == "left") xMove *= -1;
     }
 
     public void setXMove(float xMove)

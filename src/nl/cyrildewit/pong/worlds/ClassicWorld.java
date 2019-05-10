@@ -30,7 +30,7 @@ public class ClassicWorld extends World {
     private int centerX = handler.getWidth() / 2;
     private int centerY = handler.getHeight() / 2;
 
-    private final int MAXIMUM_SCORE = 1;
+    private final int MAXIMUM_SCORE = 9;
     private final int START_LEVEL = 1;
 
     private boolean isPlaying = true, isPaused = false;
@@ -170,6 +170,7 @@ public class ClassicWorld extends World {
             EntityType.Ball,
             centerX, centerY, 12
         );
+        ball.moveRandomly();
 
         PlayerScore leftPlayerScore = new PlayerScore(
             handler,
