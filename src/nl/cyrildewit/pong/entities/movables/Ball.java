@@ -36,19 +36,11 @@ public class Ball extends MovableEntity {
         bounds.width = width;
         bounds.height = height;
 
-        // xMove = -speed / 2;
-        // yMove = -speed / 6;
         moveRandomly();
     }
 
     @Override
     public void update() {
-        ClassicWorld world = (ClassicWorld) handler.getWorld();
-
-        // if(! world.isPlaying()) {
-        //     active = false;
-        // }
-
         checkCollisionWithEntities();
         move();
     }
@@ -92,7 +84,6 @@ public class Ball extends MovableEntity {
 
             if (e.getType().equals(EntityType.Goal)) {
                 if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-                    System.out.println("Goal!!" + e.getID());
                     active = false;
                     xMove = 0;
                     yMove = 0;
@@ -103,7 +94,6 @@ public class Ball extends MovableEntity {
                     }
 
                     respawn();
-                    moveRandomly();
                     active = true;
                 }
             }
@@ -127,7 +117,8 @@ public class Ball extends MovableEntity {
         xMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
         yMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
 
-        System.out.println("Speed: " + speed);
+        // Move bll to left needed
+        if (! directionX) xMove *= -1;
     }
 
     public void setXMove(float xMove)

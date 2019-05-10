@@ -57,7 +57,7 @@ public class ClassicWorld extends World {
     public void update() {
         entityManager.tick();
 
-        if (leftPlayer != null && rightPlayer != null) {
+        if (isPlaying && leftPlayer != null && rightPlayer != null) {
             if (leftPlayer.getScore() >= MAXIMUM_SCORE || rightPlayer.getScore() >= MAXIMUM_SCORE) {
                 isPlaying = false;
 
@@ -73,7 +73,7 @@ public class ClassicWorld extends World {
             }
         }
 
-        if (! isPlaying && ! isPaused && lastWinner != null && lastLoser != null) {
+        if (! isPlaying && lastWinner != null && lastLoser != null) {
             if (lastWinner == EntityID.PlayerOnePaddle) {
                 youWon.setPosition((centerX / 2) - youWon.getStringWidth() / 2, centerY);
                 youWon.setActive(true);
@@ -87,12 +87,15 @@ public class ClassicWorld extends World {
 
         if (! isPlaying && handler.getInput().isKey(KeyEvent.VK_SPACE)) {
             isPlaying = true;
+
+            incrementLevel();
+
             leftPlayer.setScore(0);
             rightPlayer.setScore(0);
             youWon.setActive(false);
+
+            ball.moveRandomly();
             ball.setActive(true);
-            ball.respawn();
-            incrementLevel();
         }
     }
 
