@@ -30,9 +30,8 @@ public class EntityManager {
 
         while(it.hasNext()){
             Entity e = it.next();
-            e.update();
-            if(! e.isActive()) {
-                it.remove();
+            if(e.isActive()) {
+                e.update();
             }
 
         }
@@ -41,7 +40,9 @@ public class EntityManager {
 
     public void render(Graphics g) {
         for(Entity e : entities){
-            e.render(g);
+            if (e.isActive()) {
+                e.render(g);
+            }
         }
     }
 
