@@ -16,7 +16,6 @@ import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.entities.statics.Net;
 import nl.cyrildewit.pong.entities.statics.PlayerScore;
 import nl.cyrildewit.pong.entities.statics.Wall;
-import nl.cyrildewit.pong.entities.statics.YouLost;
 import nl.cyrildewit.pong.entities.statics.YouWon;
 import nl.cyrildewit.pong.input.keysets.KeySet;
 import nl.cyrildewit.pong.input.keysets.PlayerOneKeySet;
@@ -41,7 +40,6 @@ public class ClassicWorld extends World {
     Player leftPlayer, rightPlayer;
     Ball ball;
     YouWon youWon;
-    YouLost youLost;
     GoToNextLevel nextLevel;
 
     public ClassicWorld(Handler handler) {
@@ -58,9 +56,6 @@ public class ClassicWorld extends World {
 
     public void update() {
         entityManager.tick();
-
-        youLost.setPosition((centerX / 2) - youLost.getStringWidth() / 2, centerY);
-        youWon.setActive(true);
 
         if (leftPlayer != null && rightPlayer != null) {
             if (leftPlayer.getScore() >= MAXIMUM_SCORE || rightPlayer.getScore() >= MAXIMUM_SCORE) {
@@ -88,16 +83,6 @@ public class ClassicWorld extends World {
                 youWon.setPosition(centerX + (centerX / 2) - youWon.getStringWidth() / 2, centerY);
                 youWon.setActive(true);
             }
-
-            if (lastLoser == EntityID.PlayerOnePaddle) {
-                youLost.setPosition((centerX / 2) - youLost.getStringWidth() / 2, centerY);
-                youLost.setActive(true);
-            }
-
-            if (lastLoser == EntityID.PlayerTwoPaddle) {
-                youLost.setPosition(centerX + (centerX / 2) - youLost.getStringWidth() / 2, centerY);
-                youLost.setActive(true);
-            }
         }
 
         if (! isPlaying && handler.getInput().isKey(KeyEvent.VK_SPACE)) {
@@ -105,7 +90,6 @@ public class ClassicWorld extends World {
             leftPlayer.setScore(0);
             rightPlayer.setScore(0);
             youWon.setActive(false);
-            youLost.setActive(false);
             ball.setActive(true);
             ball.respawn();
             incrementLevel();
@@ -202,12 +186,6 @@ public class ClassicWorld extends World {
             handler,
             EntityID.YouWon,
             EntityType.YouWon
-        );
-
-        youLost = new YouLost(
-            handler,
-            EntityID.YouLost,
-            EntityType.YouLost
         );
 
         leftGoal.setPlayer(leftPlayer);
