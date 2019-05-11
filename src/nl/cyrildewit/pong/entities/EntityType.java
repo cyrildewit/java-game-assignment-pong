@@ -9,6 +9,7 @@ public enum EntityType {
     Score(),
     Net(),
     YouWon,
-    YouLost;
+    YouLost,
+    GoToNextLevel;
 
 }

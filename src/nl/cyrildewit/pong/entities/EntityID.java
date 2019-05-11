@@ -13,6 +13,7 @@ public enum EntityID {
     PlayerTwoScore(),
     Net(),
     YouWon,
-    YouLost;
+    YouLost,
+    GoToNextLevel;
 
 }

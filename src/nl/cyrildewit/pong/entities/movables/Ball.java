@@ -67,6 +67,8 @@ public class Ball extends MovableEntity {
                     if (e instanceof Player) {
                         lastHittedBy = (Player) e;
                     }
+
+
                 }
             }
 

@@ -30,7 +30,7 @@ public class ClassicWorld extends World {
     private int centerX = handler.getWidth() / 2;
     private int centerY = handler.getHeight() / 2;
 
-    private final int MAXIMUM_SCORE = 9;
+    private final int MAXIMUM_SCORE = 1;
     private final int START_LEVEL = 1;
 
     private boolean isPlaying = true, isPaused = false;
@@ -40,7 +40,7 @@ public class ClassicWorld extends World {
     Player leftPlayer, rightPlayer;
     Ball ball;
     YouWon youWon;
-    GoToNextLevel nextLevel;
+    GoToNextLevel goToNextLevel;
 
     public ClassicWorld(Handler handler) {
         super(handler);
@@ -83,6 +83,8 @@ public class ClassicWorld extends World {
                 youWon.setPosition(centerX + (centerX / 2) - youWon.getStringWidth() / 2, centerY);
                 youWon.setActive(true);
             }
+
+            goToNextLevel.setActive(true);
         }
 
         if (! isPlaying && handler.getInput().isKey(KeyEvent.VK_SPACE)) {
@@ -190,6 +192,12 @@ public class ClassicWorld extends World {
             handler,
             EntityID.YouWon,
             EntityType.YouWon
+        );
+        
+        goToNextLevel = new GoToNextLevel(
+        	handler,
+        	EntityID.GoToNextLevel,
+        	EntityType.GoToNextLevel
         );
 
         leftGoal.setPlayer(leftPlayer);
