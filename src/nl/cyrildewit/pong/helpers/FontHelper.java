@@ -2,7 +2,7 @@ package nl.cyrildewit.pong.helpers;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.io.File;
+
 
 public class FontHelper {
     private static Graphics2D g2d;
@@ -12,7 +12,7 @@ public class FontHelper {
         Font font;
 
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(size);
+            font = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.load(path)).deriveFont(size);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(path + " not loaded. Using serif font.");

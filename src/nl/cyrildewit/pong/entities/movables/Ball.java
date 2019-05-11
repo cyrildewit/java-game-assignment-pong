@@ -10,7 +10,6 @@ import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.entities.statics.Goal;
-import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class Ball extends MovableEntity {
 

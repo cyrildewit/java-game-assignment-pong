@@ -193,7 +193,7 @@ public class ClassicWorld extends World {
             EntityID.YouWon,
             EntityType.YouWon
         );
-        
+
         goToNextLevel = new GoToNextLevel(
         	handler,
         	EntityID.GoToNextLevel,
