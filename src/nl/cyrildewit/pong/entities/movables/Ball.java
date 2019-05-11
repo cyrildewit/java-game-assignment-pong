@@ -6,22 +6,29 @@ import java.util.Random;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
+import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
+import nl.cyrildewit.pong.entities.statics.Goal;
+import nl.cyrildewit.pong.worlds.ClassicWorld;
 
 public class Ball extends MovableEntity {
 
-    private int diameter;
     private Random random;
 
-    public Ball(Handler handler, EntityType type, float x, float y, int diameter) {
-        super(handler, type, x, y, diameter, diameter);
+    private int diameter;
+    private Color backgroundColor;
+    private Player lastHittedBy;
+
+    public Ball(Handler handler, EntityID id, EntityType type, float x, float y, int diameter) {
+        super(handler, id, type, x, y, diameter, diameter);
 
         random = new Random();
 
         this.x = x - (diameter / 2);
         this.y = y - (diameter / 2);
         this.diameter = diameter;
+        this.backgroundColor = Color.WHITE;
         this.speed = 10;
 
         bounds.x = 0;
@@ -29,8 +36,7 @@ public class Ball extends MovableEntity {
         bounds.width = width;
         bounds.height = height;
 
-        xMove = -speed / 2;
-        yMove = -speed / 6;
+        moveRandomly();
     }
 
     @Override
@@ -41,7 +47,7 @@ public class Ball extends MovableEntity {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.WHITE);
+        g.setColor(backgroundColor);
         g.fillRect((int) x, (int) y, (int) height, (int) width);
     }
 
@@ -59,6 +65,10 @@ public class Ball extends MovableEntity {
                     x = xMove < 0 ? (e.getX() + width) : (e.getX() - width);
 
                     xMove *= -1;
+
+                    if (e instanceof Player) {
+                        lastHittedBy = (Player) e;
+                    }
                 }
             }
 
@@ -74,25 +84,41 @@ public class Ball extends MovableEntity {
 
             if (e.getType().equals(EntityType.Goal)) {
                 if (e.getCollisionBounds(0, 0).intersects(getCollisionBounds(0, 0))) {
-                    System.out.println("Goal!!");
+                    active = false;
+                    xMove = 0;
+                    yMove = 0;
+
+                    if (e instanceof Goal) {
+                        Goal goal = (Goal) e;
+                        goal.getOpponent().addPoint();
+                    }
+
+                    respawn();
+                    active = true;
                 }
             }
         }
     }
 
+    public void respawn() {
+        x = (handler.getWidth() / 2) - width / 2;
+        y = height + random.nextInt(handler.getHeight() - height);
+    }
+
     public void moveRandomly() {
-        int directionX = 0;
-        int directionY = 0;
+        // true => right, false => left
+        boolean directionX = false;
 
-        float minSpeed = speed / 2;
-        float maxSpeed = speed * 2;
+        float minSpeed = 4f;
+        float maxSpeed = 7f;
 
-        if (xMove > 0) directionX = 1;
-        if (yMove > 0) directionY = 1;
+        directionX = xMove > 0 ? true : false;
 
         xMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
         yMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
-        //
+
+        // Move bll to left needed
+        if (! directionX) xMove *= -1;
     }
 
     public void setXMove(float xMove)
@@ -102,5 +128,9 @@ public class Ball extends MovableEntity {
 
     public void setYMove(float yMove) {
         this.yMove = yMove;
+    }
+
+    public void setBackgroundColor(Color color) {
+        this.backgroundColor = color;
     }
 }

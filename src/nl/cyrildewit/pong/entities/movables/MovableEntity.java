@@ -2,6 +2,7 @@ package nl.cyrildewit.pong.entities.movables;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.Entity;
+import nl.cyrildewit.pong.entities.EntityID;
 import nl.cyrildewit.pong.entities.EntityType;
 
 public abstract class MovableEntity extends Entity {
@@ -11,8 +12,8 @@ public abstract class MovableEntity extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    public MovableEntity(Handler handler, EntityType type, float x, float y, int width, int height) {
-        super(handler, type, x, y, width, height);
+    public MovableEntity(Handler handler, EntityID id, EntityType type, float x, float y, int width, int height) {
+        super(handler, id, type, x, y, width, height);
 
         speed = DEFAULT_SPEED;
         xMove = 0;
