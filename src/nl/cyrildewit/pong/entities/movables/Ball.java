@@ -124,6 +124,8 @@ public class Ball extends MovableEntity {
         xMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
         yMove = minSpeed + random.nextFloat() * (maxSpeed - minSpeed);
 
+        yMove *= random.nextBoolean() ? -1 : 1;
+
         // Move bll to left needed
         if (direction == "left") xMove *= -1;
     }
