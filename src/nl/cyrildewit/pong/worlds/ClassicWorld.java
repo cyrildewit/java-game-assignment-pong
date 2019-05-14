@@ -30,7 +30,7 @@ public class ClassicWorld extends World {
     private int centerX = handler.getWidth() / 2;
     private int centerY = handler.getHeight() / 2;
 
-    private final int MAXIMUM_SCORE = 1;
+    private final int MAXIMUM_SCORE = 2;
     private final int START_LEVEL = 1;
 
     private boolean isPlaying = true, isPaused = false;
@@ -84,6 +84,7 @@ public class ClassicWorld extends World {
                 youWon.setActive(true);
             }
 
+            goToNextLevel.setPosition(centerX - goToNextLevel.getStringWidth() / 2, handler.getHeight() - 120);
             goToNextLevel.setActive(true);
         }
 
@@ -93,8 +94,11 @@ public class ClassicWorld extends World {
             incrementLevel();
 
             leftPlayer.setScore(0);
+            leftPlayer.setPosition(40, centerY);
             rightPlayer.setScore(0);
+            rightPlayer.setPosition(handler.getWidth() - 40, handler.getHeight() / 2);
             youWon.setActive(false);
+            goToNextLevel.setActive(false);
 
             ball.moveRandomly();
             ball.setActive(true);
@@ -222,6 +226,7 @@ public class ClassicWorld extends World {
         entityManager.addEntity(topWall);
         entityManager.addEntity(bottomWall);
         entityManager.addEntity(youWon);
+        entityManager.addEntity(goToNextLevel);
     }
 
     public void buildWorld(Graphics g) {

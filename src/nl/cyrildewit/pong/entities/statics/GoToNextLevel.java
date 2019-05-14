@@ -14,6 +14,7 @@ public class GoToNextLevel extends StaticEntry {
 
     protected Color textColor;
     protected Font bitFont;
+    protected int stringWidth = 0;
 
     public GoToNextLevel(Handler handler, EntityID id, EntityType type) {
         super(handler, id, type, 0, 0, 0, 0);
@@ -25,7 +26,7 @@ public class GoToNextLevel extends StaticEntry {
         bounds.width = width;
         bounds.height = height;
 
-        bitFont = FontAssets.playerScoreFont;
+        bitFont = FontAssets.middleSizeMessage;
     }
 
     @Override
@@ -35,13 +36,23 @@ public class GoToNextLevel extends StaticEntry {
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, handler.getHeight() - 200, handler.getWidth(), 200);
+
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setColor(textColor);
 
         g.setFont(bitFont);
 
-        g2d.drawString("Press space to continue playing", x, y);
+        String msg = "Press space to continue playing";
+
+        g2d.drawString(msg, x, y);
+        stringWidth = g.getFontMetrics().stringWidth(msg);
+    }
+
+    public int getStringWidth() {
+        return stringWidth;
     }
 
 }
