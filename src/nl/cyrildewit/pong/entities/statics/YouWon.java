@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 
 import nl.cyrildewit.pong.Handler;
 import nl.cyrildewit.pong.entities.EntityID;
@@ -15,6 +18,7 @@ public class YouWon extends StaticEntry {
     protected Color textColor;
     protected Font bitFont;
     protected int stringWidth = 0;
+    protected int stringHeight = 0;
 
     public YouWon(Handler handler, EntityID id, EntityType type) {
         super(handler, id, type, 0, 0, 0, 0);
@@ -42,12 +46,21 @@ public class YouWon extends StaticEntry {
 
         g.setFont(bitFont);
 
-        g2d.drawString("You Won!", x, y);
-        stringWidth = g.getFontMetrics().stringWidth("You Won!");
+        String msg = "You Won!";
+
+        g2d.drawString(msg, x, y);
+        stringWidth = g.getFontMetrics().stringWidth(msg);
+        // stringHeight = g.getFontMetrics().stringHei
     }
 
     public int getStringWidth() {
         return stringWidth;
+    }
+
+    private Rectangle getStringBounds(Graphics2D g2, String str, float x, float y) {
+        FontRenderContext frc = g2.getFontRenderContext();
+        GlyphVector gv = g2.getFont().createGlyphVector(frc, str);
+        return gv.getPixelBounds(null, x, y);
     }
 
 }
