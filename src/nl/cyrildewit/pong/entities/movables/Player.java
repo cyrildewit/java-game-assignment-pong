@@ -9,6 +9,7 @@ import nl.cyrildewit.pong.input.keysets.KeySet;
 public class Player extends Paddle {
 
     protected int score = 0;
+    protected int wins = 0, losts = 0;
     protected Goal goal;
 
     public Player(Handler handler, EntityID id, EntityType type, KeySet inputKeySet, float x, float y) {
@@ -33,5 +34,21 @@ public class Player extends Paddle {
 
     public void setGoal(Goal goal) {
         this.goal = goal;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void incrementWins() {
+        wins++;
+    }
+
+    public int getLosts() {
+        return losts;
+    }
+
+    public void incrementLosts() {
+        losts++;
     }
 }

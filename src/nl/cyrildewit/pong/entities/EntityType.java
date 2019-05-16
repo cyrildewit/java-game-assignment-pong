@@ -10,6 +10,7 @@ public enum EntityType {
     Net(),
     YouWon,
     YouLost,
-    GoToNextLevel;
+    GoToNextLevel,
+    GameStats;
 
 }

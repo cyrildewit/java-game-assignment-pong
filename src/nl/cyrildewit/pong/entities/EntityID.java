@@ -14,6 +14,8 @@ public enum EntityID {
     Net(),
     YouWon,
     YouLost,
-    GoToNextLevel;
+    GoToNextLevel,
+    LeftPlayerStats,
+    RightPlayerStats;
 
 }

@@ -11,6 +11,7 @@ import nl.cyrildewit.pong.entities.EntityManager;
 import nl.cyrildewit.pong.entities.EntityType;
 import nl.cyrildewit.pong.entities.movables.Ball;
 import nl.cyrildewit.pong.entities.movables.Player;
+import nl.cyrildewit.pong.entities.statics.GameStats;
 import nl.cyrildewit.pong.entities.statics.GoToNextLevel;
 import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.entities.statics.Net;
@@ -41,6 +42,7 @@ public class ClassicWorld extends World {
     Ball ball;
     YouWon youWon;
     GoToNextLevel goToNextLevel;
+    GameStats leftPlayerStats, rightPlayerStats;
 
     public ClassicWorld(Handler handler) {
         super(handler);
@@ -55,7 +57,8 @@ public class ClassicWorld extends World {
     }
 
     public void update() {
-        entityManager.tick();
+        leftPlayerStats.setActive(true);
+        rightPlayerStats.setActive(true);
 
         if (isPlaying && leftPlayer != null && rightPlayer != null) {
             if (leftPlayer.getScore() >= MAXIMUM_SCORE || rightPlayer.getScore() >= MAXIMUM_SCORE) {
@@ -64,9 +67,14 @@ public class ClassicWorld extends World {
                 if (leftPlayer.getScore() > rightPlayer.getScore()) {
                     lastWinner = leftPlayer.getID();
                     lastLoser = rightPlayer.getID();
+                    leftPlayer.incrementWins();
+                    rightPlayer.incrementLosts();
                 } else {
                     lastWinner = rightPlayer.getID();
                     lastLoser = leftPlayer.getID();
+                    rightPlayer.incrementWins();
+                    leftPlayer.incrementLosts();
+
                 }
 
                 ball.setActive(false);
@@ -84,8 +92,11 @@ public class ClassicWorld extends World {
                 youWon.setActive(true);
             }
 
-            goToNextLevel.setPosition(centerX - goToNextLevel.getStringWidth() / 2, handler.getHeight() - 120);
+            goToNextLevel.setPosition(centerX - goToNextLevel.getStringWidth() / 2, handler.getHeight() - 220);
             goToNextLevel.setActive(true);
+
+            leftPlayerStats.setActive(true);
+            rightPlayerStats.setActive(true);
         }
 
         if (! isPlaying && handler.getInput().isKey(KeyEvent.VK_SPACE)) {
@@ -99,10 +110,14 @@ public class ClassicWorld extends World {
             rightPlayer.setPosition(handler.getWidth() - 40, handler.getHeight() / 2);
             youWon.setActive(false);
             goToNextLevel.setActive(false);
+            leftPlayerStats.setActive(false);
+            rightPlayerStats.setActive(false);
 
             ball.moveRandomly();
             ball.setActive(true);
         }
+
+        entityManager.tick();
     }
 
     public void render(Graphics g) {
@@ -204,6 +219,28 @@ public class ClassicWorld extends World {
         	EntityType.GoToNextLevel
         );
 
+        leftPlayerStats = new GameStats(
+            handler,
+            EntityID.LeftPlayerStats,
+            EntityType.GameStats,
+            0, 0
+        );
+        leftPlayerStats.setPosition(
+            30 - leftPlayerStats.getStringWidth() / 2,
+            700
+        );
+
+        rightPlayerStats = new GameStats(
+            handler,
+            EntityID.RightPlayerStats,
+            EntityType.GameStats,
+            0, 0
+        );
+        rightPlayerStats.setPosition(
+            handler.getWidth() - 110,
+            700
+        );
+
         leftGoal.setPlayer(leftPlayer);
         leftGoal.setOpponent(rightPlayer);
         rightGoal.setPlayer(rightPlayer);
@@ -214,6 +251,9 @@ public class ClassicWorld extends World {
 
         leftPlayerScore.setPlayer(leftPlayer);
         rightPlayerScore.setPlayer(rightPlayer);
+
+        leftPlayerStats.setPlayer(leftPlayer);
+        rightPlayerStats.setPlayer(rightPlayer);
 
         entityManager.addEntity(net);
         entityManager.addEntity(ball);
@@ -227,6 +267,8 @@ public class ClassicWorld extends World {
         entityManager.addEntity(bottomWall);
         entityManager.addEntity(youWon);
         entityManager.addEntity(goToNextLevel);
+        entityManager.addEntity(leftPlayerStats);
+        entityManager.addEntity(rightPlayerStats);
     }
 
     public void buildWorld(Graphics g) {
