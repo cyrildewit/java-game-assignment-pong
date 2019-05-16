@@ -1,6 +1,8 @@
 # Java Game Assignment - Pong
 
-For a school project I decided to replicate the old video Game Pong. It's going to be build in Java.
+For a school assignment I was tasked to build my own game in Java. I decided to create my own version of the old video Game called Pong.
+
+<!-- I had never really used Java in depth before, so this was going -->
 
 ## Credits
 
