@@ -105,7 +105,7 @@ public class Ball extends MovableEntity {
 
     public void respawn() {
         x = (handler.getWidth() / 2) - width / 2;
-        y = height + random.nextInt(handler.getHeight() - height);
+        y = height + random.nextInt(handler.getHeight() - height - 1);
     }
 
     public void moveRandomly() {
