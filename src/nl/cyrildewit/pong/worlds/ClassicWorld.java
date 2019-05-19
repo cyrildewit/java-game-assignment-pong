@@ -16,6 +16,7 @@ import nl.cyrildewit.pong.entities.statics.GoToNextLevel;
 import nl.cyrildewit.pong.entities.statics.Goal;
 import nl.cyrildewit.pong.entities.statics.Net;
 import nl.cyrildewit.pong.entities.statics.PlayerScore;
+import nl.cyrildewit.pong.entities.statics.ResetGameMsg;
 import nl.cyrildewit.pong.entities.statics.Wall;
 import nl.cyrildewit.pong.entities.statics.YouWon;
 import nl.cyrildewit.pong.input.keysets.KeySet;
@@ -43,6 +44,7 @@ public class ClassicWorld extends World {
     YouWon youWon;
     GoToNextLevel goToNextLevel;
     GameStats leftPlayerStats, rightPlayerStats;
+    ResetGameMsg resetGameMsg;
 
     public ClassicWorld(Handler handler) {
         super(handler);
@@ -95,29 +97,47 @@ public class ClassicWorld extends World {
             goToNextLevel.setPosition(centerX - goToNextLevel.getStringWidth() / 2, handler.getHeight() - 220);
             goToNextLevel.setActive(true);
 
+            resetGameMsg.setPosition(centerX - resetGameMsg.getStringWidth() / 2, handler.getHeight() - 180);
+            resetGameMsg.setActive(true);
+
             leftPlayerStats.setActive(true);
             rightPlayerStats.setActive(true);
         }
 
         if (! isPlaying && handler.getInput().isKey(KeyEvent.VK_SPACE)) {
             isPlaying = true;
-
             incrementLevel();
+            resetEntities();
+        }
 
-            leftPlayer.setScore(0);
-            leftPlayer.setPosition(40, centerY);
-            rightPlayer.setScore(0);
-            rightPlayer.setPosition(handler.getWidth() - 40, handler.getHeight() / 2);
-            youWon.setActive(false);
-            goToNextLevel.setActive(false);
-            leftPlayerStats.setActive(false);
-            rightPlayerStats.setActive(false);
+        if (!isPlaying && handler.getInput().isKey(KeyEvent.VK_Y)) {
+            isPlaying = true;
+            resetLevel();
+            resetEntities();
 
-            ball.moveRandomly();
-            ball.setActive(true);
+            leftPlayer.resetWins();
+            leftPlayer.resetLosts();
+            rightPlayer.resetWins();
+            rightPlayer.resetLosts();
         }
 
         entityManager.tick();
+    }
+
+    protected void resetEntities()
+    {
+        leftPlayer.setScore(0);
+        leftPlayer.setPosition(40, centerY);
+        rightPlayer.setScore(0);
+        rightPlayer.setPosition(handler.getWidth() - 40, handler.getHeight() / 2);
+        youWon.setActive(false);
+        goToNextLevel.setActive(false);
+        resetGameMsg.setActive(false);
+        leftPlayerStats.setActive(false);
+        rightPlayerStats.setActive(false);
+
+        ball.moveRandomly();
+        ball.setActive(true);
     }
 
     public void render(Graphics g) {
@@ -219,6 +239,12 @@ public class ClassicWorld extends World {
         	EntityType.GoToNextLevel
         );
 
+        resetGameMsg = new ResetGameMsg(
+        	handler,
+        	EntityID.ResetGameMsg,
+        	EntityType.ResetGameMsg
+        );
+
         leftPlayerStats = new GameStats(
             handler,
             EntityID.LeftPlayerStats,
@@ -267,6 +293,7 @@ public class ClassicWorld extends World {
         entityManager.addEntity(bottomWall);
         entityManager.addEntity(youWon);
         entityManager.addEntity(goToNextLevel);
+        entityManager.addEntity(resetGameMsg);
         entityManager.addEntity(leftPlayerStats);
         entityManager.addEntity(rightPlayerStats);
     }

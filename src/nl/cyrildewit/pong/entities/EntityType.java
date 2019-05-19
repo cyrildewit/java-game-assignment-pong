@@ -11,6 +11,7 @@ public enum EntityType {
     YouWon,
     YouLost,
     GoToNextLevel,
-    GameStats;
+    GameStats,
+    ResetGameMsg;
 
 }

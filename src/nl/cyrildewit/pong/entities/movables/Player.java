@@ -14,6 +14,8 @@ public class Player extends Paddle {
 
     public Player(Handler handler, EntityID id, EntityType type, KeySet inputKeySet, float x, float y) {
         super(handler, id, type, inputKeySet, x, y);
+
+        this.speed = 4.0f;
     }
 
     public int getScore() {
@@ -44,11 +46,19 @@ public class Player extends Paddle {
         wins++;
     }
 
+    public void resetWins() {
+        wins = 0;
+    }
+
     public int getLosts() {
         return losts;
     }
 
     public void incrementLosts() {
         losts++;
+    }
+
+    public void resetLosts() {
+        wins = 0;
     }
 }

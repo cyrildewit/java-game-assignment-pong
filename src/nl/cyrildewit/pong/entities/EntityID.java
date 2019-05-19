@@ -16,6 +16,7 @@ public enum EntityID {
     YouLost,
     GoToNextLevel,
     LeftPlayerStats,
-    RightPlayerStats;
+    RightPlayerStats,
+    ResetGameMsg;
 
 }
